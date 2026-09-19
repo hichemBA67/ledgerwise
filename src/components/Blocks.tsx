@@ -4,6 +4,8 @@ import type { Block } from "@/content/types";
 import { slugify } from "@/lib/slug";
 import { Inline } from "./Inline";
 import { PlayerLogo } from "./PlayerLogo";
+import { productBySlug } from "@/content/products";
+import { FlowDiagram } from "./FlowDiagram";
 import { Widget } from "./widgets";
 
 const calloutStyles = {
@@ -182,5 +184,19 @@ function BlockView({ block: b }: { block: Block }) {
       );
     case "widget":
       return <Widget kind={b.kind} />;
+    case "diagram": {
+      const p = productBySlug.get(b.product);
+      return p ? (
+        <div className="not-prose">
+          <FlowDiagram product={p} />
+          <p className="-mt-4 mb-2 text-[13px] text-muted">
+            Full detail:{" "}
+            <Link href={`/products/${p.slug}`} className="font-medium text-accent hover:underline">
+              {p.name} →
+            </Link>
+          </p>
+        </div>
+      ) : null;
+    }
   }
 }

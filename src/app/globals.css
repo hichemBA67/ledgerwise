@@ -27,6 +27,7 @@
   --track-infra: #7c3aed;
   --track-token: #0a8a72;
   --track-reg: #be185d;
+  --track-markets: #0369a1;
 }
 
 .dark {
@@ -54,6 +55,7 @@
   --track-infra: #b79bff;
   --track-token: #3dd6b5;
   --track-reg: #f472b6;
+  --track-markets: #38bdf8;
   color-scheme: dark;
 }
 

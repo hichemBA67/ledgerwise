@@ -31,6 +31,7 @@ export const infrastructure: Topic[] = [
           { label: "Issuer register", detail: "Legal record of ownership (often the CSD itself)" },
         ],
       },
+      { type: "diagram", product: "custody-service" },
       { type: "h", text: "Omnibus vs segregated" },
       {
         type: "compare",
@@ -125,6 +126,7 @@ export const infrastructure: Topic[] = [
           points: ["Each member faces only the CCP", "Multilateral netting shrinks settlement flows by ~95%+", "Standardised margin & default management"],
         },
       },
+      { type: "diagram", product: "ccp-clearing" },
       { type: "h", text: "Margin" },
       {
         type: "list",
@@ -224,6 +226,7 @@ export const infrastructure: Topic[] = [
         type: "p",
         text: "National CSDs serve their domestic market (DTC in the US, Euroclear France, Clearstream Banking Frankfurt, SIX SIS, JASDEC). The two **ICSDs**, Euroclear Bank (Brussels) and Clearstream Banking (Luxembourg), settle eurobonds and cross-border trades and are connected by the 'Bridge'. In the euro area, **TARGET2-Securities (T2S)** is a single ECB-run settlement platform used by most CSDs, settling in central bank money.",
       },
+      { type: "diagram", product: "csd-settlement" },
       { type: "h", text: "DvP models" },
       {
         type: "table",
@@ -318,6 +321,7 @@ export const infrastructure: Topic[] = [
           "**Wrong-way risk**: collateral that correlates with the giver's default (e.g. a bank's own bonds).",
         ],
       },
+      { type: "diagram", product: "tri-party-repo" },
       { type: "h", text: "Tri-party collateral management" },
       {
         type: "p",

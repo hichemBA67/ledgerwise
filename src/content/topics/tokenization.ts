@@ -40,6 +40,7 @@ export const tokenization: Topic[] = [
         },
       },
       { type: "h", text: "The tokenization stack" },
+      { type: "diagram", product: "tokenized-bond" },
       {
         type: "flow",
         steps: [
@@ -225,6 +226,7 @@ export const tokenization: Topic[] = [
           ["Key risk", "Reserve quality, run risk, depeg", "Bank credit risk; interoperability", "Policy & design; limited reach"],
         ],
       },
+      { type: "diagram", product: "stablecoin" },
       { type: "h", text: "How a fiat-backed stablecoin works" },
       {
         type: "flow",

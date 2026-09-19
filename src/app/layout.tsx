@@ -7,6 +7,7 @@ import { themeScript } from "@/components/ThemeToggle";
 import { topics } from "@/content";
 import { glossary } from "@/content/glossary";
 import { players } from "@/content/players";
+import { products } from "@/content/products";
 import { site } from "@/lib/site";
 import { slugify } from "@/lib/slug";
 import "./globals.css";
@@ -21,12 +22,16 @@ export const metadata: Metadata = {
 };
 
 const searchItems: SearchItem[] = [
+  { kind: "Page", title: "The finance map", text: "Mental model: 7 layers × 6 lifecycle stages", href: "/map" },
   { kind: "Page", title: "Curriculum", text: "All tracks and lessons", href: "/learn" },
+  { kind: "Page", title: "Products & services", text: "Flow diagrams for every instrument", href: "/products" },
+  { kind: "Page", title: "Global institution map", text: "Interactive globe of institutions", href: "/globe" },
   { kind: "Page", title: "Global comparison", text: "US, EU, UK, CH, SG, HK, JP, UAE side by side", href: "/compare" },
   { kind: "Page", title: "Major players", text: "Custodians, CSDs, CCPs, banks, tokenization platforms", href: "/players" },
   { kind: "Page", title: "Tokenization timeline", text: "Milestones from 2017 to 2027", href: "/timeline" },
   { kind: "Page", title: "Glossary", text: "Key terms A–Z", href: "/glossary" },
   ...topics.map((t) => ({ kind: "Topic" as const, title: t.title, text: t.summary, href: `/learn/${t.slug}` })),
+  ...products.map((p) => ({ kind: "Product" as const, title: p.name, text: p.short, href: `/products/${p.slug}` })),
   ...players.map((p) => ({ kind: "Player" as const, title: p.name, text: `${p.category} · ${p.what}`, href: `/players?focus=${p.id}` })),
   ...glossary.map((g) => ({ kind: "Term" as const, title: g.term, text: g.def, href: `/glossary#${slugify(g.term)}` })),
 ];

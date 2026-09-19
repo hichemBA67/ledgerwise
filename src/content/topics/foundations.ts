@@ -32,6 +32,7 @@ export const foundations: Topic[] = [
           ["Wholesale CBDC", "Central bank", "Banks and FMIs", "Project Helvetia (SNB), ECB Pontes, mBridge"],
         ],
       },
+      { type: "diagram", product: "bank-deposit" },
       { type: "h", text: "Why settlement asset matters" },
       {
         type: "p",

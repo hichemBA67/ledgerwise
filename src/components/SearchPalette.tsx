@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-export type SearchItem = { kind: "Topic" | "Player" | "Term" | "Page"; title: string; text: string; href: string };
+export type SearchItem = { kind: "Topic" | "Player" | "Term" | "Page" | "Product"; title: string; text: string; href: string };
 
 export function SearchPalette({ items }: { items: SearchItem[] }) {
   const [open, setOpen] = useState(false);

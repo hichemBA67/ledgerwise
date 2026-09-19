@@ -17,6 +17,7 @@ export function SiteFooter() {
           title="Learn"
           links={[
             ["/learn", "Curriculum"],
+            ["/map", "The finance map"],
             ["/learn/repo", "Repo"],
             ["/learn/tokenization-101", "Tokenization 101"],
             ["/glossary", "Glossary"],
@@ -25,6 +26,8 @@ export function SiteFooter() {
         <FooterCol
           title="Explore"
           links={[
+            ["/products", "Products & services"],
+            ["/globe", "Global institution map"],
             ["/compare", "Global comparison"],
             ["/players", "Major players"],
             ["/timeline", "Tokenization timeline"],

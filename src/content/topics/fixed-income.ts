@@ -35,6 +35,7 @@ export const fixedIncome: Topic[] = [
           ["Governing law", "Luxembourg / English law", "Which courts decide disputes"],
         ],
       },
+      { type: "diagram", product: "corporate-bond" },
       { type: "h", text: "Price and yield move in opposite directions" },
       {
         type: "p",
@@ -226,6 +227,7 @@ export const fixedIncome: Topic[] = [
         title: "The chain behind one eurobond",
         text: "A typical eurobond involves the issuer, bookrunners, lawyers for both sides, a fiscal or issuing & paying agent, a common depositary and a common safekeeper holding the global note, the ICSDs (Euroclear Bank and Clearstream Banking), custodians and investors. Digital bond issuances collapse many of these roles into the ledger.",
       },
+      { type: "diagram", product: "government-bond" },
       { type: "h", text: "Secondary trading" },
       {
         type: "p",

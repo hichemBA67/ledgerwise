@@ -8,9 +8,15 @@ import { SearchPalette, type SearchItem } from "./SearchPalette";
 import { ThemeToggle } from "./ThemeToggle";
 
 const NAV = [
+  { href: "/map", label: "Map" },
   { href: "/learn", label: "Curriculum" },
-  { href: "/compare", label: "Global comparison" },
+  { href: "/products", label: "Products" },
+  { href: "/globe", label: "Globe" },
+  { href: "/compare", label: "Compare" },
   { href: "/players", label: "Players" },
+];
+
+const MORE = [
   { href: "/timeline", label: "Timeline" },
   { href: "/glossary", label: "Glossary" },
 ];
@@ -40,6 +46,16 @@ export function SiteHeader({ searchItems, repo }: { searchItems: SearchItem[]; r
               </Link>
             );
           })}
+          <details className="group relative">
+            <summary className="cursor-pointer list-none rounded-lg px-3 py-2 text-[14px] font-medium text-muted transition hover:text-ink">More</summary>
+            <div className="absolute right-0 z-50 mt-1 w-40 rounded-xl border border-line bg-surface p-1 shadow-lg">
+              {MORE.map((m) => (
+                <Link key={m.href} href={m.href} className="block rounded-lg px-3 py-2 text-[14px] text-ink hover:bg-surface-2">
+                  {m.label}
+                </Link>
+              ))}
+            </div>
+          </details>
         </nav>
         <div className="ml-auto flex items-center gap-2">
           <SearchPalette items={searchItems} />
@@ -68,7 +84,7 @@ export function SiteHeader({ searchItems, repo }: { searchItems: SearchItem[]; r
       </div>
       {menu ? (
         <nav className="border-t border-line bg-bg px-4 py-3 lg:hidden">
-          {NAV.map((n) => (
+          {[...NAV, ...MORE].map((n) => (
             <Link key={n.href} href={n.href} onClick={() => setMenu(false)} className="block rounded-lg px-3 py-2.5 text-[15px] font-medium text-ink hover:bg-surface">
               {n.label}
             </Link>

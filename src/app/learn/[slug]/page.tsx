@@ -2,12 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Blocks } from "@/components/Blocks";
+import { MiniMap } from "@/components/MiniMap";
 import { GitHubIcon } from "@/components/icons";
 import { PlayerLogo } from "@/components/PlayerLogo";
 import { CompleteButton, ProgressBar, TrackNav } from "@/components/ProgressControls";
 import { Quiz } from "@/components/Quiz";
 import { Toc } from "@/components/Toc";
 import { getTopic, neighbours, topicSourceFile, topics, topicsForTrack } from "@/content";
+import { topicCoords } from "@/content/map";
 import { playerById } from "@/content/players";
 import { trackById } from "@/content/tracks";
 import { githubEditUrl, githubIssueUrl } from "@/lib/site";
@@ -183,8 +185,9 @@ export default async function TopicPage({ params }: PageProps<"/learn/[slug]">) 
 
       {/* Right: TOC */}
       <aside className="hidden xl:block">
-        <div className="sticky top-24">
+        <div className="sticky top-24 space-y-5">
           <Toc items={toc} />
+          {topicCoords[slug] ? <MiniMap coords={topicCoords[slug]} /> : null}
         </div>
       </aside>
     </div>

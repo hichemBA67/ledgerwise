@@ -2,9 +2,11 @@ import Link from "next/link";
 import { PlayerLogo } from "@/components/PlayerLogo";
 import { ContinueLink, ProgressBar } from "@/components/ProgressControls";
 import { topics, topicsForTrack, tracks } from "@/content";
-import { glossary } from "@/content/glossary";
 import { jurisdictions } from "@/content/jurisdictions";
 import { playerById, players } from "@/content/players";
+import { layers } from "@/content/map";
+import { products } from "@/content/products";
+import { cities } from "@/content/cities";
 import { milestones } from "@/content/timeline";
 
 const bridges = [
@@ -86,9 +88,9 @@ export default function Home() {
           {[
             [topics.length, "lessons"],
             [`${Math.round(totalMinutes / 60)}h`, "of content"],
-            [widgets, "interactive tools"],
-            [players.length, "market players"],
-            [glossary.length, "glossary terms"],
+            [widgets + 1, "interactive tools"],
+            [products.length, "products drawn"],
+            [players.length, "institutions"],
           ].map(([v, l]) => (
             <div key={l as string} className="py-6">
               <dt className="sr-only">{l}</dt>
@@ -124,6 +126,69 @@ export default function Home() {
               </Link>
             );
           })}
+        </div>
+      </section>
+
+
+      {/* Mental model */}
+      <section className="border-y border-line bg-surface/50">
+        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
+          <SectionHead kicker="The finance map" title="One mental model for all of it" text="Seven layers and six lifecycle stages. Every product, institution and rule has a place, and you can search any of them to see exactly where it fits." href="/map" cta="Open the map" />
+          <div className="mt-10 grid gap-4 lg:grid-cols-[1.2fr_1fr]">
+            <ol className="overflow-hidden rounded-2xl border border-line bg-surface">
+              {layers.map((l) => (
+                <li key={l.id} className="flex items-baseline gap-3 border-b border-line px-5 py-3 last:border-0" style={{ borderLeft: `4px solid ${l.color}` }}>
+                  <span className="font-mono text-[11.5px] text-faint">L{l.n}</span>
+                  <span className="text-[15px] font-semibold text-ink">{l.label}</span>
+                  <span className="hidden text-[13.5px] text-muted sm:block">{l.question}</span>
+                </li>
+              ))}
+            </ol>
+            <div className="rounded-2xl border border-line bg-surface p-6">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-faint">Five questions to classify anything</p>
+              <ol className="mt-4 space-y-3 text-[14.5px] leading-snug text-ink/85">
+                {[
+                  "What is it? → layer",
+                  "When does it act? → issue, trade, clear, settle, service, finance",
+                  "Which asset class? → cash, money market, bonds, equity, funds, derivatives, FX, digital",
+                  "What risk does it carry or remove?",
+                  "Which rails: traditional or tokenized?",
+                ].map((t, i) => (
+                  <li key={t} className="flex gap-3">
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent-soft font-mono text-[12px] font-semibold text-accent">{i + 1}</span>
+                    {t}
+                  </li>
+                ))}
+              </ol>
+              <Link href="/learn/the-finance-stack" className="mt-5 inline-block text-[14px] font-semibold text-accent hover:underline">
+                Read the lesson →
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Products */}
+      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
+        <SectionHead kicker="Products & services" title="Every instrument, drawn" text="Who the parties are, how cash and assets move at each step, the risk profile, and the tokenized version." href="/products" cta="Browse all products" />
+        <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {["repo", "government-bond", "etf", "stablecoin", "securities-loan", "interest-rate-swap", "csd-settlement", "tokenized-mmf"].map((slug) => {
+            const p = products.find((x) => x.slug === slug)!;
+            return (
+              <Link key={slug} href={`/products/${slug}`} className="group rounded-2xl border border-line bg-surface p-5 transition hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-md">
+                <p className="font-mono text-[11px] text-faint">{p.family}</p>
+                <p className="mt-2 text-[16px] font-semibold text-ink group-hover:text-accent">{p.name}</p>
+                <p className="mt-1.5 text-[13px] leading-snug text-muted">{p.short}</p>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Globe */}
+      <section className="border-y border-line bg-surface/50">
+        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
+          <SectionHead kicker="Global institution map" title="Spin the world of finance" text={`${players.filter((p) => p.city).length} institutions across ${Object.keys(cities).length} financial centres, on an interactive globe you can filter and explore.`} href="/globe" cta="Open the globe" />
         </div>
       </section>
 

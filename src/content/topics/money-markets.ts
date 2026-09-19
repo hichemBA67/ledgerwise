@@ -31,6 +31,7 @@ export const moneyMarkets: Topic[] = [
           ["Fed funds / interbank", "Banks", "No", "Overnight"],
         ],
       },
+      { type: "diagram", product: "treasury-bill" },
       { type: "h", text: "Secured vs unsecured" },
       {
         type: "p",
@@ -100,6 +101,7 @@ export const moneyMarkets: Topic[] = [
         ],
       },
       { type: "widget", kind: "repo" },
+      { type: "diagram", product: "repo" },
       { type: "h", text: "Key terms" },
       {
         type: "list",
@@ -222,6 +224,7 @@ export const moneyMarkets: Topic[] = [
         ],
       },
       { type: "widget", kind: "seclending" },
+      { type: "diagram", product: "securities-loan" },
       { type: "h", text: "Cash vs non-cash collateral" },
       {
         type: "table",
@@ -320,6 +323,7 @@ export const moneyMarkets: Topic[] = [
           ["UK", "Onshored EU MMFR", "FCA consulted in 2023 on stronger liquidity rules"],
         ],
       },
+      { type: "diagram", product: "money-market-fund" },
       { type: "h", text: "Breaking the buck" },
       {
         type: "p",

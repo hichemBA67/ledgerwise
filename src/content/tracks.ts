@@ -29,6 +29,15 @@ export const tracks: Track[] = [
     icon: "▤",
   },
   {
+    id: "markets",
+    title: "Equities, Funds & Derivatives",
+    short: "Stocks, ETFs, futures, swaps, FX",
+    description:
+      "The rest of the product universe: shares and exchanges, fund structures and ETFs, listed and OTC derivatives, and the FX market.",
+    color: "var(--track-markets)",
+    icon: "◆",
+  },
+  {
     id: "infrastructure",
     title: "Market Infrastructure",
     short: "Custody, clearing, settlement, collateral",

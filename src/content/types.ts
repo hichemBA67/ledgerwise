@@ -2,6 +2,7 @@ export type TrackId =
   | "foundations"
   | "money-markets"
   | "fixed-income"
+  | "markets"
   | "infrastructure"
   | "tokenization"
   | "regulation";
@@ -29,7 +30,9 @@ export type Block =
     }
   | { type: "stats"; items: { value: string; label: string; source?: string }[] }
   | { type: "players"; title?: string; ids: string[] }
-  | { type: "widget"; kind: WidgetKind };
+  | { type: "widget"; kind: WidgetKind }
+  /** Embeds the flow diagram of a product from src/content/products. */
+  | { type: "diagram"; product: string };
 
 export type WidgetKind =
   | "repo"
@@ -84,7 +87,12 @@ export type PlayerCategory =
   | "Digital Asset Custody"
   | "Exchange / Venue"
   | "Central Bank / Regulator"
-  | "Data & Rating";
+  | "Data & Rating"
+  | "Payments & Messaging"
+  | "Market Technology"
+  | "Industry Body"
+  | "Asset Owner"
+  | "Issuer";
 
 export type Region = "Americas" | "Europe" | "Asia-Pacific" | "Middle East" | "Global";
 
@@ -95,6 +103,8 @@ export type Player = {
   category: PlayerCategory;
   region: Region;
   hq: string;
+  /** Key into src/content/cities.ts; omitted for decentralised networks. */
+  city?: string;
   what: string;
   tokenization?: string;
   topics: string[];
@@ -118,3 +128,62 @@ export type Milestone = {
   kind: "Bond" | "Fund" | "Repo / Collateral" | "Cash" | "Infrastructure" | "Regulation";
   players?: string[];
 };
+
+/* ---------- Mental model ---------- */
+
+export type Layer = "users" | "products" | "markets" | "intermediaries" | "infrastructure" | "money" | "oversight";
+export type Stage = "issue" | "trade" | "clear" | "settle" | "service" | "finance";
+export type AssetClass = "cash" | "money-market" | "fixed-income" | "equity" | "funds" | "derivatives" | "fx" | "digital";
+
+export type Coords = { layers: Layer[]; stages: Stage[]; assets: AssetClass[] };
+
+export type MapNode = Coords & {
+  id: string;
+  label: string;
+  desc: string;
+  tokenized?: string;
+  examples?: string[];
+  lessons?: string[];
+  products?: string[];
+};
+
+/* ---------- Products & services ---------- */
+
+export type ProductFamily =
+  | "Money & Payments"
+  | "Money Market"
+  | "Financing"
+  | "Bonds"
+  | "Equity & Funds"
+  | "Derivatives"
+  | "Infrastructure Services"
+  | "Tokenized";
+
+export type FlowKind = "cash" | "asset" | "collateral" | "info" | "risk";
+
+export type Product = {
+  slug: string;
+  name: string;
+  family: ProductFamily;
+  kind: "Product" | "Service";
+  short: string;
+  what: string;
+  issuer: string;
+  holders: string;
+  /** Typical tenor in days (for the tenor/risk map); omitted for services. */
+  tenorDays?: number;
+  tenor: string;
+  size?: string;
+  /** 1 (low) – 5 (high) */
+  risk: { credit: number; market: number; liquidity: number; complexity: number };
+  where: { trade: string; clear: string; settle: string; hold: string };
+  parties: { id: string; label: string; sub?: string }[];
+  flows: { from: string; to: string; label: string; kind: FlowKind; phase: string }[];
+  keyPoints: string[];
+  tokenized?: { text: string; examples: string[] };
+  coords: Coords;
+  lessons: string[];
+  players: string[];
+};
+
+export type City = { name: string; country: string; lat: number; lng: number };

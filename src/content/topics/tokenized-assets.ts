@@ -25,6 +25,7 @@ export const tokenizedAssets: Topic[] = [
           "Natural collateral for repo, which links to tokenized funding markets.",
         ],
       },
+      { type: "diagram", product: "tokenized-bond" },
       { type: "h", text: "Issuance on DLT" },
       {
         type: "flow",
@@ -150,6 +151,7 @@ export const tokenizedAssets: Topic[] = [
           { value: "~$2.9B", label: "BUIDL peak AUM (2025)", source: "rwa.xyz" },
         ],
       },
+      { type: "diagram", product: "tokenized-mmf" },
       { type: "h", text: "Why they matter" },
       {
         type: "list",
@@ -209,6 +211,7 @@ export const tokenizedAssets: Topic[] = [
     ],
     blocks: [
       { type: "h", text: "The problem" },
+      { type: "diagram", product: "intraday-tokenized-repo" },
       {
         type: "p",
         text: "Banks need large intraday liquidity to make payments, and they hold large portfolios of HQLA that can't move fast enough to generate it. Traditional repo settles in windows and is overnight at minimum. Tokenized repo lets a bank borrow cash **for two hours** against Treasuries and unwind automatically.",
@@ -294,6 +297,7 @@ export const tokenizedAssets: Topic[] = [
     ],
     blocks: [
       { type: "h", text: "The RWA landscape" },
+      { type: "diagram", product: "private-fund" },
       {
         type: "table",
         headers: ["Asset class", "Examples", "Notes"],
