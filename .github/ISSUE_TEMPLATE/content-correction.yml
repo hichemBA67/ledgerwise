@@ -1,0 +1,22 @@
+name: Content correction
+description: Something is wrong, unclear or out of date in a lesson
+labels: [content]
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Page
+      description: URL or lesson slug, e.g. /learn/repo
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is wrong or outdated?
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Suggested fix and primary source
+      description: Link to a regulator, central bank, FMI or issuer source where possible.
