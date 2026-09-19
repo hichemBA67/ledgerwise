@@ -1,8 +1,14 @@
 import { productsA } from "./products-a";
 import { productsB } from "./products-b";
-import type { ProductFamily } from "./types";
+import { partyExamples, why } from "./products-why";
+import type { Product, ProductFamily } from "./types";
 
-export const products = [...productsA, ...productsB];
+/** Merges the authored product specs with their "why" copy and named example institutions. */
+export const products: Product[] = [...productsA, ...productsB].map((p) => ({
+  ...p,
+  why: why[p.slug],
+  parties: p.parties.map((party) => ({ ...party, example: partyExamples[p.slug]?.[party.id] ?? party.example })),
+}));
 export const productBySlug = new Map(products.map((p) => [p.slug, p]));
 
 export const families: { id: ProductFamily; color: string; blurb: string }[] = [

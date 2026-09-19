@@ -1,6 +1,8 @@
 import type { Product } from "./types";
 
-export const productsB: Product[] = [
+type Spec = Omit<Product, "why">;
+
+export const productsB: Spec[] = [
   // ================= Equity & funds =================
   {
     slug: "common-share",

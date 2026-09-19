@@ -35,6 +35,12 @@ for (const p of products) {
   for (const s of p.lessons) if (!slugs.has(s)) errors.push(`${at} unknown lesson ${s}`);
   for (const id of p.players) if (!playerIds.has(id)) errors.push(`${at} unknown player ${id}`);
   for (const id of p.tokenized?.examples ?? []) if (!playerIds.has(id)) errors.push(`${at} tokenized example unknown player ${id}`);
+  for (const party of p.parties) if (party.example && !playerIds.has(party.example)) errors.push(`${at} party ${party.id} names unknown player ${party.example}`);
+  if (!p.why) errors.push(`${at} missing "why" entry in products-why.ts`);
+  else {
+    if (p.why.problem.length < 80) errors.push(`${at} "why.problem" is too short to explain anything`);
+    if (p.why.users.length < 2) errors.push(`${at} needs at least two "who needs it" entries`);
+  }
   if (!p.coords.layers.length || !p.coords.stages.length) errors.push(`${at} incomplete map coordinates`);
 }
 

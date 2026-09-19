@@ -6,7 +6,7 @@ import { MiniMap } from "@/components/MiniMap";
 import { PlayerLogo } from "@/components/PlayerLogo";
 import { topics } from "@/content";
 import { families, productBySlug, products } from "@/content/products";
-import { playerById } from "@/content/players";
+import { playerById, players } from "@/content/players";
 
 export const dynamicParams = false;
 
@@ -28,6 +28,7 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
   const family = families.find((f) => f.id === product.family)!;
   const related = products.filter((p) => p.family === product.family && p.slug !== product.slug).slice(0, 4);
   const lessonTitles = new Map(topics.map((t) => [t.slug, t.title]));
+  const playerMeta = Object.fromEntries(players.map((p) => [p.id, { name: p.name, domain: p.domain }]));
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
@@ -49,101 +50,121 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
         <p className="mt-4 max-w-2xl text-[18px] leading-relaxed text-muted">{product.short}</p>
       </header>
 
-      <div className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_300px]">
-        <div className="min-w-0">
-          <p className="text-[16.5px] leading-[1.75] text-ink/90">{product.what}</p>
-
-          <FlowDiagram product={product} />
-
-          <section>
-            <h2 className="font-serif text-2xl text-ink">Key points</h2>
-            <ul className="mt-3 space-y-2">
-              {product.keyPoints.map((k) => (
-                <li key={k} className="flex gap-2.5 text-[15px] text-ink/85">
-                  <span className="mt-[3px] text-accent">▸</span>
-                  {k}
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          <section className="mt-8">
-            <h2 className="font-serif text-2xl text-ink">Where it lives</h2>
-            <dl className="mt-3 overflow-hidden rounded-xl border border-line bg-surface">
-              {[
-                ["Issued / provided by", product.issuer],
-                ["Held by", product.holders],
-                ["Traded", product.where.trade],
-                ["Cleared", product.where.clear],
-                ["Settled", product.where.settle],
-                ["Held & serviced", product.where.hold],
-                ...(product.size ? [["Market size", product.size]] : []),
-              ].map(([k, v]) => (
-                <div key={k} className="grid grid-cols-[150px_1fr] gap-3 border-b border-line px-4 py-2.5 text-[14px] last:border-0">
-                  <dt className="font-medium text-muted">{k}</dt>
-                  <dd className="text-ink/85">{v}</dd>
-                </div>
-              ))}
-            </dl>
-          </section>
-
-          {product.tokenized ? (
-            <section className="mt-8 rounded-2xl border border-token/30 bg-token-soft p-6">
-              <p className="text-[12px] font-semibold uppercase tracking-[0.12em] text-token">◈ Tokenized version</p>
-              <p className="mt-2 text-[15.5px] leading-relaxed text-ink/90">{product.tokenized.text}</p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {product.tokenized.examples.map((id) => {
-                  const pl = playerById.get(id);
-                  return pl ? (
-                    <Link key={id} href={`/players?focus=${id}`} className="flex items-center gap-2 rounded-full border border-line bg-surface py-1 pl-1 pr-3 text-[13px] font-medium text-ink">
-                      <PlayerLogo name={pl.name} domain={pl.domain} size={24} />
-                      {pl.name}
-                    </Link>
-                  ) : null;
-                })}
-              </div>
-            </section>
-          ) : null}
+      {/* At a glance */}
+      <section className="mt-8 grid gap-3 md:grid-cols-3">
+        <div className="rounded-xl border border-line bg-surface p-4">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-faint">Risk profile</p>
+          <div className="mt-3">
+            <RiskBars risk={product.risk} />
+          </div>
         </div>
-
-        <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
-          <div className="rounded-xl border border-line bg-surface p-4">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-faint">Risk profile</p>
-            <div className="mt-3">
-              <RiskBars risk={product.risk} />
-            </div>
+        <MiniMap coords={product.coords} />
+        <div className="rounded-xl border border-line bg-surface p-4">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-faint">Go deeper</p>
+          <ul className="mt-2 space-y-1.5">
+            {product.lessons.map((s) => (
+              <li key={s}>
+                <Link href={`/learn/${s}`} className="text-[13.5px] font-medium text-accent hover:underline">
+                  {lessonTitles.get(s) ?? s} →
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-faint">Who&apos;s involved</p>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {product.players.map((id) => {
+              const pl = playerById.get(id);
+              return pl ? (
+                <Link key={id} href={`/players?focus=${id}`} title={pl.name}>
+                  <PlayerLogo name={pl.name} domain={pl.domain} size={30} />
+                </Link>
+              ) : null;
+            })}
           </div>
+        </div>
+      </section>
 
-          <MiniMap coords={product.coords} />
+      {/* Why it exists */}
+      <section className="mt-10 max-w-3xl rounded-2xl border border-line bg-surface p-6">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-faint">Why this exists</p>
+        <p className="mt-3 font-serif text-[23px] leading-[1.45] text-ink">{product.why.problem}</p>
 
-          <div className="rounded-xl border border-line bg-surface p-4">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-faint">Learn more</p>
-            <ul className="mt-2 space-y-1.5">
-              {product.lessons.map((s) => (
-                <li key={s}>
-                  <Link href={`/learn/${s}`} className="text-[13.5px] font-medium text-accent hover:underline">
-                    {lessonTitles.get(s) ?? s} →
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+        <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.12em] text-faint">Who needs it, and why</p>
+        <ul className="mt-3 grid gap-2.5 sm:grid-cols-2">
+          {product.why.users.map((u) => (
+            <li key={u.who} className="rounded-xl border border-line bg-bg p-4">
+              <p className="text-[14.5px] font-semibold text-ink">{u.who}</p>
+              <p className="mt-1 text-[13.5px] leading-relaxed text-muted">{u.because}</p>
+            </li>
+          ))}
+        </ul>
 
-          <div className="rounded-xl border border-line bg-surface p-4">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-faint">Who&apos;s involved</p>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {product.players.map((id) => {
-                const pl = playerById.get(id);
-                return pl ? (
-                  <Link key={id} href={`/players?focus=${id}`} title={pl.name}>
-                    <PlayerLogo name={pl.name} domain={pl.domain} size={32} />
-                  </Link>
-                ) : null;
-              })}
-            </div>
-          </div>
-        </aside>
+        {product.why.withoutIt ? (
+          <p className="mt-4 rounded-xl border border-warn/25 bg-warn-soft px-4 py-3 text-[14px] leading-relaxed text-ink/85">
+            <span className="font-semibold text-warn">Without it: </span>
+            {product.why.withoutIt}
+          </p>
+        ) : null}
+      </section>
+
+      {/* How it works + full-width diagram */}
+      <section className="mt-10 max-w-3xl">
+        <h2 className="font-serif text-3xl text-ink">How it works</h2>
+        <p className="mt-2 text-[17px] leading-[1.75] text-ink/90">{product.what}</p>
+      </section>
+      <FlowDiagram product={product} players={playerMeta} />
+
+      <div className="grid gap-10 md:grid-cols-2">
+        <section>
+          <h2 className="font-serif text-2xl text-ink">What to remember</h2>
+          <ul className="mt-3 space-y-2">
+            {product.keyPoints.map((k) => (
+              <li key={k} className="flex gap-2.5 text-[15px] leading-relaxed text-ink/85">
+                <span className="mt-[3px] text-accent">▸</span>
+                {k}
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section>
+          <h2 className="font-serif text-2xl text-ink">Where it lives</h2>
+          <dl className="mt-3 overflow-hidden rounded-xl border border-line bg-surface">
+            {[
+              ["Issued / provided by", product.issuer],
+              ["Held by", product.holders],
+              ["Traded", product.where.trade],
+              ["Cleared", product.where.clear],
+              ["Settled", product.where.settle],
+              ["Held & serviced", product.where.hold],
+              ...(product.size ? [["Market size", product.size]] : []),
+            ].map(([k, v]) => (
+              <div key={k} className="grid grid-cols-[130px_1fr] gap-3 border-b border-line px-4 py-2.5 text-[14px] last:border-0">
+                <dt className="font-medium text-muted">{k}</dt>
+                <dd className="text-ink/85">{v}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
       </div>
+
+      {product.tokenized ? (
+        <section className="mt-10 max-w-3xl rounded-2xl border border-token/30 bg-token-soft p-6">
+          <p className="text-[12px] font-semibold uppercase tracking-[0.12em] text-token">◈ Tokenized version</p>
+          <p className="mt-2 text-[15.5px] leading-relaxed text-ink/90">{product.tokenized.text}</p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {product.tokenized.examples.map((id) => {
+              const pl = playerById.get(id);
+              return pl ? (
+                <Link key={id} href={`/players?focus=${id}`} className="flex items-center gap-2 rounded-full border border-line bg-surface py-1 pl-1 pr-3 text-[13px] font-medium text-ink">
+                  <PlayerLogo name={pl.name} domain={pl.domain} size={24} />
+                  {pl.name}
+                </Link>
+              ) : null;
+            })}
+          </div>
+        </section>
+      ) : null}
 
       {related.length ? (
         <section className="mt-14 border-t border-line pt-8">

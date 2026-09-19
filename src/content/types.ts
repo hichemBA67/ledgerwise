@@ -1,3 +1,4 @@
+import type { Why } from "./products-why";
 export type TrackId =
   | "foundations"
   | "money-markets"
@@ -177,8 +178,11 @@ export type Product = {
   /** 1 (low) – 5 (high) */
   risk: { credit: number; market: number; liquidity: number; complexity: number };
   where: { trade: string; clear: string; settle: string; hold: string };
-  parties: { id: string; label: string; sub?: string }[];
+  /** `example` is a player id: the real institution that typically plays this role. */
+  parties: { id: string; label: string; sub?: string; example?: string }[];
   flows: { from: string; to: string; label: string; kind: FlowKind; phase: string }[];
+  /** Plain-language reason the product exists (see products-why.ts). */
+  why: Why;
   keyPoints: string[];
   tokenized?: { text: string; examples: string[] };
   coords: Coords;

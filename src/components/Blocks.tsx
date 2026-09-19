@@ -5,8 +5,11 @@ import { slugify } from "@/lib/slug";
 import { Inline } from "./Inline";
 import { PlayerLogo } from "./PlayerLogo";
 import { productBySlug } from "@/content/products";
+import { players } from "@/content/players";
 import { FlowDiagram } from "./FlowDiagram";
 import { Widget } from "./widgets";
+
+const playerMeta = Object.fromEntries(players.map((p) => [p.id, { name: p.name, domain: p.domain }]));
 
 const calloutStyles = {
   info: { box: "border-accent/25 bg-accent-soft/60", label: "text-accent", icon: "i" },
@@ -188,7 +191,7 @@ function BlockView({ block: b }: { block: Block }) {
       const p = productBySlug.get(b.product);
       return p ? (
         <div className="not-prose">
-          <FlowDiagram product={p} />
+          <FlowDiagram product={p} players={playerMeta} />
           <p className="-mt-4 mb-2 text-[13px] text-muted">
             Full detail:{" "}
             <Link href={`/products/${p.slug}`} className="font-medium text-accent hover:underline">
