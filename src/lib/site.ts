@@ -4,7 +4,7 @@ export const site = {
   description:
     "A free learning platform for the plumbing of finance (money markets, repo, securities lending, MMFs, bonds, custody, clearing and settlement) and how tokenization is rebuilding each of them.",
   /** Set NEXT_PUBLIC_GITHUB_REPO to your repository URL, e.g. https://github.com/you/ledgerwise */
-  repo: process.env.NEXT_PUBLIC_GITHUB_REPO ?? "https://github.com/ledgerwise/ledgerwise",
+  repo: process.env.NEXT_PUBLIC_GITHUB_REPO ?? "https://github.com/hichemBA67/ledgerwise",
   branch: "main",
 };
 
