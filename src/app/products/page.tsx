@@ -20,6 +20,7 @@ export default function ProductsPage() {
     need: p.why.users[0] ? `${p.why.users[0].who} use it because ${p.why.users[0].because}.` : p.why.problem,
     tenor: p.tenor,
     tokenized: Boolean(p.tokenized),
+    steps: p.build.steps.length,
     search: [p.name, p.short, p.why.problem, p.family, p.issuer, p.holders].join(" ").toLowerCase(),
   }));
 
@@ -29,7 +30,7 @@ export default function ProductsPage() {
         <p className="font-mono text-[12px] uppercase tracking-[0.16em] text-accent">Products & services</p>
         <h1 className="mt-2 font-serif text-5xl font-medium tracking-tight text-ink">Every instrument, explained</h1>
         <p className="mt-4 text-[17px] leading-relaxed text-muted">
-          {products.length} products and services. Each page answers the same four questions: <strong className="text-ink">why does this exist</strong>, who needs it, how does cash and collateral actually move between the parties, and what does the tokenized version look like.
+          {products.length} products and services. Each page answers the same questions: <strong className="text-ink">why does this exist</strong>, who needs it, how do cash and collateral actually move between the parties, and <strong className="text-ink">how would you build the tokenized version</strong>, as a checklist you can tick off.
         </p>
       </header>
 

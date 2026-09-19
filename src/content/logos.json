@@ -1,0 +1,671 @@
+{
+  "21x.eu": {
+    "file": "21x-eu.png"
+  },
+  "aave.com": {
+    "file": "aave-com.png"
+  },
+  "addx.co": {
+    "file": "addx-co.png"
+  },
+  "adgm.com": {
+    "file": "adgm-com.png"
+  },
+  "adia.ae": {
+    "file": "adia-ae.png"
+  },
+  "adx.ae": {
+    "file": "adx-ae.png"
+  },
+  "afme.eu": {
+    "file": "afme-eu.png",
+    "light": true
+  },
+  "allianz.com": {
+    "file": "allianz-com.png"
+  },
+  "amf-france.org": {
+    "file": "amf-france-org.png"
+  },
+  "aminagroup.com": {
+    "file": "aminagroup-com.png"
+  },
+  "amundi.com": {
+    "file": "amundi-com.png"
+  },
+  "anchorage.com": {
+    "file": "anchorage-com.png"
+  },
+  "anz.com": {
+    "file": "anz-com.png"
+  },
+  "apollo.com": {
+    "file": "apollo-com.png"
+  },
+  "archax.com": {
+    "file": "archax-com.png"
+  },
+  "asic.gov.au": {
+    "file": "asic-gov-au.png"
+  },
+  "asx.com.au": {
+    "file": "asx-com-au.png"
+  },
+  "avax.network": {
+    "file": "avax-network.png"
+  },
+  "b3.com.br": {
+    "file": "b3-com-br.png"
+  },
+  "backed.fi": {
+    "file": "backed-fi.png"
+  },
+  "bafin.de": {
+    "file": "bafin-de.png"
+  },
+  "bancaditalia.it": {
+    "file": "bancaditalia-it.png"
+  },
+  "bankfab.com": {
+    "file": "bankfab-com.png"
+  },
+  "bankofamerica.com": {
+    "file": "bankofamerica-com.png"
+  },
+  "bankofcanada.ca": {
+    "file": "bankofcanada-ca.png"
+  },
+  "bankofengland.co.uk": {
+    "file": "bankofengland-co-uk.png"
+  },
+  "banque-france.fr": {
+    "file": "banque-france-fr.png"
+  },
+  "barclays.com": {
+    "file": "barclays-com.png"
+  },
+  "bcb.gov.br": {
+    "file": "bcb-gov-br.png"
+  },
+  "bis.org": {
+    "file": "bis-org.png"
+  },
+  "bitgo.com": {
+    "file": "bitgo-com.png"
+  },
+  "blackrock.com": {
+    "file": "blackrock-com.png"
+  },
+  "bloomberg.com": {
+    "file": "bloomberg-com.png"
+  },
+  "bnpparibas.com": {
+    "file": "bnpparibas-com.png"
+  },
+  "bny.com": {
+    "file": "bny-com.png"
+  },
+  "boj.or.jp": {
+    "file": "boj-or-jp.png"
+  },
+  "bok.or.kr": {
+    "file": "bok-or-kr.png"
+  },
+  "broadridge.com": {
+    "file": "broadridge-com.png"
+  },
+  "bundesbank.de": {
+    "file": "bundesbank-de.png",
+    "light": true
+  },
+  "bxswiss.com": {
+    "file": "bxswiss-com.png"
+  },
+  "caceis.com": {
+    "file": "caceis-com.png",
+    "light": true
+  },
+  "calastone.com": {
+    "file": "calastone-com.png"
+  },
+  "calpers.ca.gov": {
+    "file": "calpers-ca-gov.png"
+  },
+  "cashlink.de": {
+    "file": "cashlink-de.png"
+  },
+  "cboe.com": {
+    "file": "cboe-com.png"
+  },
+  "ccb.com": {
+    "file": "ccb-com.png"
+  },
+  "ccilindia.com": {
+    "file": "ccilindia-com.png"
+  },
+  "centralbank.ae": {
+    "file": "centralbank-ae.png"
+  },
+  "centrifuge.io": {
+    "file": "centrifuge-io.png"
+  },
+  "cftc.gov": {
+    "file": "cftc-gov.png"
+  },
+  "chain.link": {
+    "file": "chain-link.png"
+  },
+  "chainalysis.com": {
+    "file": "chainalysis-com.png"
+  },
+  "circle.com": {
+    "file": "circle-com.png",
+    "light": true
+  },
+  "citadelsecurities.com": {
+    "file": "citadelsecurities-com.png"
+  },
+  "citigroup.com": {
+    "file": "citigroup-com.png"
+  },
+  "clearstream.com": {
+    "file": "clearstream-com.png",
+    "light": true
+  },
+  "cls-group.com": {
+    "file": "cls-group-com.png"
+  },
+  "cmegroup.com": {
+    "file": "cmegroup-com.png"
+  },
+  "coinbase.com": {
+    "file": "coinbase-com.png"
+  },
+  "commbank.com.au": {
+    "file": "commbank-com-au.png"
+  },
+  "copper.co": {
+    "file": "copper-co.png"
+  },
+  "cppinvestments.com": {
+    "file": "cppinvestments-com.png"
+  },
+  "crypto-finance.com": {
+    "file": "crypto-finance-com.png"
+  },
+  "cssf.lu": {
+    "file": "cssf-lu.png"
+  },
+  "db.com": {
+    "file": "db-com.png"
+  },
+  "dbrsmorningstar.com": {
+    "file": "dbrsmorningstar-com.png"
+  },
+  "dbs.com": {
+    "file": "dbs-com.png"
+  },
+  "deutsche-boerse.com": {
+    "file": "deutsche-boerse-com.png"
+  },
+  "dfm.ae": {
+    "file": "dfm-ae.png"
+  },
+  "dfs.ny.gov": {
+    "file": "dfs-ny-gov.png"
+  },
+  "dfsa.ae": {
+    "file": "dfsa-ae.png"
+  },
+  "digitalasset.com": {
+    "file": "digitalasset-com.png"
+  },
+  "dtcc.com": {
+    "file": "dtcc-com.png"
+  },
+  "dws.com": {
+    "file": "dws-com.png",
+    "light": true
+  },
+  "eba.europa.eu": {
+    "file": "eba-europa-eu.png"
+  },
+  "ebaclearing.eu": {
+    "file": "ebaclearing-eu.png"
+  },
+  "ecb.europa.eu": {
+    "file": "ecb-europa-eu.png"
+  },
+  "eib.org": {
+    "file": "eib-org.png"
+  },
+  "elliptic.co": {
+    "file": "elliptic-co.png"
+  },
+  "emiratesnbd.com": {
+    "file": "emiratesnbd-com.png"
+  },
+  "equilend.com": {
+    "file": "equilend-com.png"
+  },
+  "esma.europa.eu": {
+    "file": "esma-europa-eu.png"
+  },
+  "ethereum.org": {
+    "file": "ethereum-org.png"
+  },
+  "eurex.com": {
+    "file": "eurex-com.png"
+  },
+  "euroclear.com": {
+    "file": "euroclear-com.png"
+  },
+  "euronext.com": {
+    "file": "euronext-com.png"
+  },
+  "fca.org.uk": {
+    "file": "fca-org-uk.png"
+  },
+  "fdic.gov": {
+    "file": "fdic-gov.png"
+  },
+  "federalreserve.gov": {
+    "file": "federalreserve-gov.png"
+  },
+  "federatedhermes.com": {
+    "file": "federatedhermes-com.png"
+  },
+  "fia.org": {
+    "file": "fia-org.png"
+  },
+  "fidelity.com": {
+    "file": "fidelity-com.png"
+  },
+  "figure.com": {
+    "file": "figure-com.png"
+  },
+  "finma.ch": {
+    "file": "finma-ch.png"
+  },
+  "finra.org": {
+    "file": "finra-org.png"
+  },
+  "fireblocks.com": {
+    "file": "fireblocks-com.png"
+  },
+  "fisglobal.com": {
+    "file": "fisglobal-com.png"
+  },
+  "fitchratings.com": {
+    "file": "fitchratings-com.png"
+  },
+  "fnality.com": {
+    "file": "fnality-com.png"
+  },
+  "fnz.com": {
+    "file": "fnz-com.png"
+  },
+  "franklintempleton.com": {
+    "file": "franklintempleton-com.png"
+  },
+  "fsa.go.jp": {
+    "file": "fsa-go-jp.png"
+  },
+  "fsb.org": {
+    "file": "fsb-org.png"
+  },
+  "fsc.go.kr": {
+    "file": "fsc-go-kr.png"
+  },
+  "gic.com.sg": {
+    "file": "gic-com-sg.png"
+  },
+  "goldmansachs.com": {
+    "file": "goldmansachs-com.png"
+  },
+  "gpif.go.jp": {
+    "file": "gpif-go-jp.png"
+  },
+  "hamiltonlane.com": {
+    "file": "hamiltonlane-com.png"
+  },
+  "hedera.com": {
+    "file": "hedera-com.png"
+  },
+  "hkex.com.hk": {
+    "file": "hkex-com-hk.png"
+  },
+  "hkma.gov.hk": {
+    "file": "hkma-gov-hk.png"
+  },
+  "hsbc.com": {
+    "file": "hsbc-com.png"
+  },
+  "iberclear.es": {
+    "file": "iberclear-es.png"
+  },
+  "icbc.com.cn": {
+    "file": "icbc-com-cn.png"
+  },
+  "ice.com": {
+    "file": "ice-com.png"
+  },
+  "icmagroup.org": {
+    "file": "icmagroup-org.png"
+  },
+  "ifsca.gov.in": {
+    "file": "ifsca-gov-in.png"
+  },
+  "imf.org": {
+    "file": "imf-org.png"
+  },
+  "ing.com": {
+    "file": "ing-com.png"
+  },
+  "intesasanpaolo.com": {
+    "file": "intesasanpaolo-com.png"
+  },
+  "invesco.com": {
+    "file": "invesco-com.png"
+  },
+  "iosco.org": {
+    "file": "iosco-org.png"
+  },
+  "isda.org": {
+    "file": "isda-org.png"
+  },
+  "islaemea.org": {
+    "file": "islaemea-org.png"
+  },
+  "itau.com.br": {
+    "file": "itau-com-br.png"
+  },
+  "jasdec.com": {
+    "file": "jasdec-com.png"
+  },
+  "jpmorgan.com": {
+    "file": "jpmorgan-com.png"
+  },
+  "jpx.co.jp": {
+    "file": "jpx-co-jp.png"
+  },
+  "jse.co.za": {
+    "file": "jse-co-za.png"
+  },
+  "kdpw.pl": {
+    "file": "kdpw-pl.png"
+  },
+  "kinexys.com": {
+    "file": "kinexys-com.png"
+  },
+  "kkr.com": {
+    "file": "kkr-com.png"
+  },
+  "krx.co.kr": {
+    "file": "krx-co-kr.png"
+  },
+  "ksd.or.kr": {
+    "file": "ksd-or-kr.png",
+    "light": true
+  },
+  "layerzero.network": {
+    "file": "layerzero-network.png"
+  },
+  "lch.com": {
+    "file": "lch-com.png"
+  },
+  "lseg.com": {
+    "file": "lseg-com.png"
+  },
+  "marketaxess.com": {
+    "file": "marketaxess-com.png"
+  },
+  "mas.gov.sg": {
+    "file": "mas-gov-sg.png"
+  },
+  "mastercard.com": {
+    "file": "mastercard-com.png"
+  },
+  "mizuhogroup.com": {
+    "file": "mizuhogroup-com.png"
+  },
+  "moodys.com": {
+    "file": "moodys-com.png"
+  },
+  "morganstanley.com": {
+    "file": "morganstanley-com.png"
+  },
+  "msci.com": {
+    "file": "msci-com.png"
+  },
+  "mufg.jp": {
+    "file": "mufg-jp.png"
+  },
+  "murex.com": {
+    "file": "murex-com.png"
+  },
+  "nasdaq.com": {
+    "file": "nasdaq-com.png"
+  },
+  "nbim.no": {
+    "file": "nbim-no.png"
+  },
+  "nomura.com": {
+    "file": "nomura-com.png"
+  },
+  "nordea.com": {
+    "file": "nordea-com.png"
+  },
+  "northerntrust.com": {
+    "file": "northerntrust-com.png"
+  },
+  "npci.org.in": {
+    "file": "npci-org-in.png"
+  },
+  "nsdl.co.in": {
+    "file": "nsdl-co-in.png"
+  },
+  "nseindia.com": {
+    "file": "nseindia-com.png"
+  },
+  "nyse.com": {
+    "file": "nyse-com.png",
+    "light": true
+  },
+  "occ.gov": {
+    "file": "occ-gov.png"
+  },
+  "ondo.finance": {
+    "file": "ondo-finance.png"
+  },
+  "osc.ca": {
+    "file": "osc-ca.png"
+  },
+  "partior.com": {
+    "file": "partior-com.png"
+  },
+  "paxos.com": {
+    "file": "paxos-com.png"
+  },
+  "paypal.com": {
+    "file": "paypal-com.png"
+  },
+  "pif.gov.sa": {
+    "file": "pif-gov-sa.png"
+  },
+  "pimco.com": {
+    "file": "pimco-com.png"
+  },
+  "polygon.technology": {
+    "file": "polygon-technology.png"
+  },
+  "progmat.co.jp": {
+    "file": "progmat-co-jp.png"
+  },
+  "provenance.io": {
+    "file": "provenance-io.png",
+    "light": true
+  },
+  "r3.com": {
+    "file": "r3-com.png"
+  },
+  "rba.gov.au": {
+    "file": "rba-gov-au.png"
+  },
+  "rbc.com": {
+    "file": "rbc-com.png"
+  },
+  "rbi.org.in": {
+    "file": "rbi-org-in.png"
+  },
+  "riksbank.se": {
+    "file": "riksbank-se.png"
+  },
+  "ripple.com": {
+    "file": "ripple-com.png"
+  },
+  "santander.com": {
+    "file": "santander-com.png"
+  },
+  "sbi.co.in": {
+    "file": "sbi-co-in.png"
+  },
+  "sc.com": {
+    "file": "sc-com.png"
+  },
+  "schroders.com": {
+    "file": "schroders-com.png"
+  },
+  "scoperatings.com": {
+    "file": "scoperatings-com.png"
+  },
+  "sdx.com": {
+    "file": "sdx-com.png"
+  },
+  "sebi.gov.in": {
+    "file": "sebi-gov-in.png"
+  },
+  "sec.gov": {
+    "file": "sec-gov.png",
+    "light": true
+  },
+  "securitize.io": {
+    "file": "securitize-io.png"
+  },
+  "sfc.hk": {
+    "file": "sfc-hk.png"
+  },
+  "sgforge.com": {
+    "file": "sgforge-com.png"
+  },
+  "sgx.com": {
+    "file": "sgx-com.png"
+  },
+  "siemens.com": {
+    "file": "siemens-com.png"
+  },
+  "sifma.org": {
+    "file": "sifma-org.png"
+  },
+  "six-group.com": {
+    "file": "six-group-com.png"
+  },
+  "smfg.co.jp": {
+    "file": "smfg-co-jp.png"
+  },
+  "snb.ch": {
+    "file": "snb-ch.png"
+  },
+  "solana.com": {
+    "file": "solana-com.png"
+  },
+  "spglobal.com": {
+    "file": "spglobal-com.png"
+  },
+  "ssctech.com": {
+    "file": "ssctech-com.png"
+  },
+  "sse.com.cn": {
+    "file": "sse-com-cn.png"
+  },
+  "statestreet.com": {
+    "file": "statestreet-com.png"
+  },
+  "stellar.org": {
+    "file": "stellar-org.png"
+  },
+  "strate.co.za": {
+    "file": "strate-co-za.png"
+  },
+  "superstate.com": {
+    "file": "superstate-com.png"
+  },
+  "swift.com": {
+    "file": "swift-com.png"
+  },
+  "sygnum.com": {
+    "file": "sygnum-com.png"
+  },
+  "taurushq.com": {
+    "file": "taurushq-com.png"
+  },
+  "temasek.com.sg": {
+    "file": "temasek-com-sg.png"
+  },
+  "temenos.com": {
+    "file": "temenos-com.png"
+  },
+  "tether.to": {
+    "file": "tether-to.png",
+    "light": true
+  },
+  "theclearinghouse.org": {
+    "file": "theclearinghouse-org.png"
+  },
+  "theocc.com": {
+    "file": "theocc-com.png"
+  },
+  "tmx.com": {
+    "file": "tmx-com.png"
+  },
+  "tokeny.com": {
+    "file": "tokeny-com.png"
+  },
+  "tradeweb.com": {
+    "file": "tradeweb-com.png"
+  },
+  "ubs.com": {
+    "file": "ubs-com.png"
+  },
+  "unicreditgroup.eu": {
+    "file": "unicreditgroup-eu.png"
+  },
+  "uniswap.org": {
+    "file": "uniswap-org.png",
+    "light": true
+  },
+  "vanguard.com": {
+    "file": "vanguard-com.png"
+  },
+  "vara.ae": {
+    "file": "vara-ae.png"
+  },
+  "visa.com": {
+    "file": "visa-com.png"
+  },
+  "wellsfargo.com": {
+    "file": "wellsfargo-com.png"
+  },
+  "wisdomtree.com": {
+    "file": "wisdomtree-com.png"
+  },
+  "worldbank.org": {
+    "file": "worldbank-org.png"
+  },
+  "wormhole.com": {
+    "file": "wormhole-com.png"
+  },
+  "zodia-custody.com": {
+    "file": "zodia-custody-com.png"
+  }
+}

@@ -36,6 +36,20 @@ for (const p of products) {
   for (const id of p.players) if (!playerIds.has(id)) errors.push(`${at} unknown player ${id}`);
   for (const id of p.tokenized?.examples ?? []) if (!playerIds.has(id)) errors.push(`${at} tokenized example unknown player ${id}`);
   for (const party of p.parties) if (party.example && !playerIds.has(party.example)) errors.push(`${at} party ${party.id} names unknown player ${party.example}`);
+  if (!p.build) errors.push(`${at} missing build recipe in products-build-*.ts`);
+  else {
+    const PHASES = ["legal", "ledger", "identity", "cash", "custody", "lifecycle", "interop", "controls"];
+    if (p.build.steps.length < 4) errors.push(`${at} build recipe needs at least four steps`);
+    const seen = new Set<string>();
+    for (const st of p.build.steps) {
+      if (!PHASES.includes(st.id)) errors.push(`${at} build step uses unknown phase "${st.id}"`);
+      if (seen.has(st.id)) errors.push(`${at} build phase "${st.id}" appears twice`);
+      seen.add(st.id);
+      if (!st.do.length) errors.push(`${at} build step "${st.id}" has no actions`);
+    }
+    for (const pre of p.build.prereqs) if (pre.product && !productSlugs.has(pre.product)) errors.push(`${at} build prereq → unknown product ${pre.product}`);
+    for (const pre of p.build.precedents) for (const id of pre.players) if (!playerIds.has(id)) errors.push(`${at} build precedent → unknown player ${id}`);
+  }
   if (!p.why) errors.push(`${at} missing "why" entry in products-why.ts`);
   else {
     if (p.why.problem.length < 80) errors.push(`${at} "why.problem" is too short to explain anything`);
@@ -90,4 +104,4 @@ if (errors.length) {
   console.error(`✗ ${errors.length} content error(s):\n  ` + errors.join("\n  "));
   process.exit(1);
 }
-console.log(`✓ Content OK: ${topics.length} topics, ${products.length} products, ${players.length} players (${new Set(players.filter((p) => p.city).map((p) => p.city)).size} cities), ${mapNodes.length} map nodes, ${glossary.length} terms, ${milestones.length} milestones`);
+console.log(`✓ Content OK: ${topics.length} topics, ${products.length} products (${products.reduce((n, p) => n + p.build.steps.length, 0)} build steps), ${players.length} players (${new Set(players.filter((p) => p.city).map((p) => p.city)).size} cities), ${mapNodes.length} map nodes, ${glossary.length} terms, ${milestones.length} milestones`);

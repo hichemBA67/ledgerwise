@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { BuildRecipe } from "@/components/BuildRecipe";
 import { FlowDiagram, RiskBars } from "@/components/FlowDiagram";
 import { MiniMap } from "@/components/MiniMap";
 import { PlayerLogo } from "@/components/PlayerLogo";
@@ -48,6 +49,9 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
         </div>
         <h1 className="mt-5 font-serif text-4xl font-medium leading-tight tracking-tight text-ink sm:text-5xl">{product.name}</h1>
         <p className="mt-4 max-w-2xl text-[18px] leading-relaxed text-muted">{product.short}</p>
+        <a href="#build" className="mt-5 inline-flex items-center gap-2 rounded-lg border border-token/40 bg-token-soft px-4 py-2 text-[14px] font-semibold text-token hover:border-token">
+          ◈ Build it tokenized: {product.build.steps.length}-step recipe ↓
+        </a>
       </header>
 
       {/* At a glance */}
@@ -165,6 +169,15 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
           </div>
         </section>
       ) : null}
+
+      {/* Build recipe */}
+      <div className="mt-12">
+        <BuildRecipe
+          slug={product.slug}
+          recipe={product.build}
+          players={playerMeta}
+        />
+      </div>
 
       {related.length ? (
         <section className="mt-14 border-t border-line pt-8">

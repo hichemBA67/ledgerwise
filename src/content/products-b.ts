@@ -1,6 +1,6 @@
 import type { Product } from "./types";
 
-type Spec = Omit<Product, "why">;
+type Spec = Omit<Product, "why" | "build">;
 
 export const productsB: Spec[] = [
   // ================= Equity & funds =================

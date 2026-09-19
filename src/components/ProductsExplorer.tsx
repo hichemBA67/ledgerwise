@@ -13,6 +13,7 @@ export type ProductCard = {
   need: string;
   tenor: string;
   tokenized: boolean;
+  steps: number;
   search: string;
 };
 
@@ -102,9 +103,10 @@ export function ProductsExplorer({
                     <span className="font-semibold text-ink/70">Why: </span>
                     {c.need}
                   </p>
-                  {c.tokenized ? (
-                    <p className="mt-3 text-[11.5px] font-semibold text-token">◈ Has a tokenized version</p>
-                  ) : null}
+                  <p className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11.5px] font-semibold text-token">
+                    <span>◈ {c.steps}-step build recipe</span>
+                    {c.tokenized ? <span className="text-muted">Tokenized version exists today</span> : null}
+                  </p>
                 </Link>
               ))}
             </div>

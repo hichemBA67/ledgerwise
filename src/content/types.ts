@@ -162,6 +162,31 @@ export type ProductFamily =
 
 export type FlowKind = "cash" | "asset" | "collateral" | "info" | "risk";
 
+/** One step of a product's "build it tokenized" recipe. */
+export type BuildStep = {
+  /** Canonical phase id, shared across products: legal, ledger, identity, cash, custody, lifecycle, interop, controls. */
+  id: string;
+  title: string;
+  /** Concrete things to do, in order. */
+  do: string[];
+  /** The decision or trade-off this step turns on. */
+  decide?: string;
+  /** The classic mistake. */
+  watch?: string;
+};
+
+export type BuildRecipe = {
+  /** What you are actually building, in one line. */
+  goal: string;
+  prereqs: { label: string; product?: string }[];
+  steps: BuildStep[];
+  /** The smallest thing worth shipping. */
+  mvp: string;
+  /** The part that actually blocks projects. */
+  hard: string;
+  precedents: { what: string; players: string[] }[];
+};
+
 export type Product = {
   slug: string;
   name: string;
@@ -183,6 +208,8 @@ export type Product = {
   flows: { from: string; to: string; label: string; kind: FlowKind; phase: string }[];
   /** Plain-language reason the product exists (see products-why.ts). */
   why: Why;
+  /** Step-by-step recipe for building the tokenized version (see products-build-*.ts). */
+  build: BuildRecipe;
   keyPoints: string[];
   tokenized?: { text: string; examples: string[] };
   coords: Coords;

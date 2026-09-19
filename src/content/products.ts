@@ -1,5 +1,7 @@
 import { productsA } from "./products-a";
 import { productsB } from "./products-b";
+import { buildA } from "./products-build-a";
+import { buildB } from "./products-build-b";
 import { partyExamples, why } from "./products-why";
 import type { Product, ProductFamily } from "./types";
 
@@ -7,6 +9,7 @@ import type { Product, ProductFamily } from "./types";
 export const products: Product[] = [...productsA, ...productsB].map((p) => ({
   ...p,
   why: why[p.slug],
+  build: { ...buildA, ...buildB }[p.slug],
   parties: p.parties.map((party) => ({ ...party, example: partyExamples[p.slug]?.[party.id] ?? party.example })),
 }));
 export const productBySlug = new Map(products.map((p) => [p.slug, p]));
