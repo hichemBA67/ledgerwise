@@ -26,6 +26,8 @@ const searchItems: SearchItem[] = [
   { kind: "Page", title: "Curriculum", text: "All tracks and lessons", href: "/learn" },
   { kind: "Page", title: "Products & services", text: "Flow diagrams for every instrument", href: "/products" },
   { kind: "Page", title: "Global institution map", text: "Interactive globe of institutions", href: "/globe" },
+  { kind: "Page", title: "RL1 ecosystem", text: "Regulated Layer One in 3D: members, validators, vendors, geography, blind spots", href: "/" },
+  { kind: "Page", title: "Fundamentals", text: "Finance fundamentals and tokenization learning path", href: "/fundamentals" },
   { kind: "Page", title: "Global comparison", text: "US, EU, UK, CH, SG, HK, JP, UAE side by side", href: "/compare" },
   { kind: "Page", title: "Major players", text: "Custodians, CSDs, CCPs, banks, tokenization platforms", href: "/players" },
   { kind: "Page", title: "Tokenization timeline", text: "Milestones from 2017 to 2027", href: "/timeline" },

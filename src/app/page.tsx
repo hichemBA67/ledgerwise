@@ -1,275 +1,332 @@
-import Link from "next/link";
+import type { Metadata } from "next";
 import { PlayerLogo } from "@/components/PlayerLogo";
-import { ContinueLink, ProgressBar } from "@/components/ProgressControls";
-import { topics, topicsForTrack, tracks } from "@/content";
-import { jurisdictions } from "@/content/jurisdictions";
-import { playerById, players } from "@/content/players";
-import { layers } from "@/content/map";
-import { products } from "@/content/products";
-import { cities } from "@/content/cities";
-import { milestones } from "@/content/timeline";
+import { Coverage, CoverageFindings, SourcesTable } from "@/components/rl1/Coverage";
+import { Distribution } from "@/components/rl1/Distribution";
+import { EcosystemStack3D } from "@/components/rl1/EcosystemStack3D";
+import { MemberGlobe3D } from "@/components/rl1/MemberGlobe3D";
+import { Rl1Database } from "@/components/rl1/Rl1Database";
+import { universe, universeSources } from "@/content/universe";
+import { CATEGORIES } from "@/content/universe-taxonomy";
+import { LAYERS, RL1_AS_OF, SOURCES, blindSpots, entities, positions, type Rl1Entity } from "@/content/rl1";
 
-const bridges = [
-  { from: "Repo", fromSlug: "repo", to: "Intraday tokenized repo", toSlug: "tokenized-repo-and-collateral" },
-  { from: "Money market funds", fromSlug: "money-market-funds", to: "Tokenized MMFs (BUIDL, BENJI)", toSlug: "tokenized-money-market-funds" },
-  { from: "Bonds", fromSlug: "bonds-basics", to: "Digital-native bonds", toSlug: "tokenized-bonds" },
-  { from: "Custody", fromSlug: "custody", to: "Key management & MPC custody", toSlug: "digital-asset-custody" },
-  { from: "Settlement (T+1)", fromSlug: "settlement-and-csds", to: "Atomic T+0 settlement", toSlug: "atomic-settlement-and-dlt-fmi" },
-  { from: "Bank money", fromSlug: "money-and-banking", to: "Stablecoins, deposit tokens, wCBDC", toSlug: "stablecoins-and-tokenized-cash" },
-  { from: "Collateral management", fromSlug: "collateral-management", to: "24/7 collateral mobility", toSlug: "tokenized-repo-and-collateral" },
+export const metadata: Metadata = {
+  title: { absolute: "RL1 Ecosystem Hub: who builds, runs and uses Regulated Layer One" },
+  description:
+    "Regulated Layer One in 3D: members, validators, operator, vendors, regulators and competing networks, how they interact, where they are, and what the map leaves out.",
+};
+
+const byId = Object.fromEntries(entities.map((e) => [e.id, e])) as Record<string, Rl1Entity>;
+
+const ROSTER: { title: string; note: string; ids: string[] }[] = [
+  { title: "Founding members", note: "Equal-vote SCE members since 28 Jul 2026", ids: entities.filter((e) => e.rel === "founding").map((e) => e.id) },
+  { title: "Joining", note: "Phase-1 participant, listed 'joining soon'", ids: ["natwest"] },
+  { title: "Supporters & observers", note: "Back the network without a member vote", ids: ["kfw", "lbank", "vbank", "imf"] },
+  { title: "Validators", note: "The eight nodes listed on rl1.network", ids: ["swiat", "dekabank", "lbbw", "scventures", "adesso", "gft", "nttdata", "soprasteria"] },
 ];
 
-const wallIds = ["bny", "statestreet", "jpmorgan", "euroclear", "clearstream", "dtcc", "lch", "blackrock", "franklin", "goldman", "hsbc", "ubs", "securitize", "circle", "broadridge", "sdx", "fidelity", "citi", "bnpparibas", "coinbase", "fireblocks", "ecb", "fed", "mas"];
+const SECTIONS = [
+  ["stack", "3D stack"],
+  ["roster", "Who's in"],
+  ["positioning", "Positioning"],
+  ["geography", "Geography"],
+  ["coverage", "Coverage"],
+  ["distribution", "Distribution"],
+  ["blind-spots", "Blind spots"],
+  ["database", "Database"],
+  ["method", "Method"],
+];
 
-export default function Home() {
-  const order = topics.map((t) => ({ slug: t.slug, title: t.title }));
-  const totalMinutes = topics.reduce((s, t) => s + t.minutes, 0);
-  const widgets = new Set(topics.flatMap((t) => t.blocks.filter((b) => b.type === "widget").map((b) => (b.type === "widget" ? b.kind : "")))).size;
-  const recent = [...milestones].filter((m) => m.year >= 2024 && m.year <= 2025).slice(-4);
+export default function Rl1Page() {
+  const founding = entities.filter((e) => e.rel === "founding");
+  const foundingCountries = new Set(founding.map((e) => e.country)).size;
+  const prospects = entities.filter((e) => e.rel === "prospect");
+  const prospectCountries = [...new Set(prospects.map((e) => e.country))].sort();
+  const uCountries = new Set(universe.map((r) => r.cc).filter(Boolean)).size;
+  const registerSources = universeSources.filter((s) => !["rl1-core", "players", "curated", "gleif", "geonames"].includes(s.id)).length;
+  const highFit = universe.filter((r) => r.fit === "high").length;
+  const memberCountries = new Set(entities.filter((e) => ["founding", "joining"].includes(e.rel)).map((e) => e.country));
 
   return (
-    <>
-      {/* Hero */}
-      <section className="relative overflow-hidden border-b border-line">
-        <div className="bg-grid pointer-events-none absolute inset-0" aria-hidden />
-        <div className="relative mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 md:py-24 lg:grid-cols-[1.1fr_1fr] lg:items-center">
-          <div>
-            <p className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 text-[12px] font-medium text-muted">
-              <span className="h-1.5 w-1.5 rounded-full bg-token" /> Finance fundamentals × tokenization
-            </p>
-            <h1 className="mt-6 font-serif text-[2.6rem] font-medium leading-[1.05] tracking-tight text-ink sm:text-6xl">
-              Learn the plumbing of finance.
-              <br />
-              <span className="italic text-token">Then see it rebuilt on-chain.</span>
-            </h1>
-            <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-muted">
-              Repo, securities lending, money market funds, bonds, custody, clearing and settlement, each explained from first principles and linked to its tokenized counterpart, with real players, global comparisons and hands-on calculators.
-            </p>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <ContinueLink order={order} />
-              <Link href="/compare" className="inline-flex items-center gap-2 rounded-xl border border-line bg-surface px-5 py-3 text-[15px] font-semibold text-ink transition hover:border-accent/50">
-                Global comparison
-              </Link>
-            </div>
-            <div className="mt-8 max-w-sm">
-              <ProgressBar slugs={order.map((o) => o.slug)} color="var(--token)" />
-            </div>
-          </div>
+    <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
+      <header className="max-w-3xl">
+        <p className="font-mono text-[12px] uppercase tracking-[0.16em] text-accent">RL1 Ecosystem Hub · snapshot {RL1_AS_OF}</p>
+        <h1 className="mt-2 font-serif text-5xl font-medium tracking-tight text-ink sm:text-6xl">Regulated Layer One, mapped</h1>
+        <p className="mt-4 text-[17px] leading-relaxed text-muted">
+          RL1 is the platform layer: a bank-owned, permissioned ledger run as a European Cooperative Society in Luxembourg. On top of it sit the asset,
+          service and access layers (the ASAP stack), resting on supervisors and central-bank money. This hub maps every institution that builds, runs,
+          uses or could join it ({universe.length.toLocaleString()} institutions in {uCountries} countries, from {registerSources} public datasets published by the ECB, ESMA and DefiLlama,
+          plus a labelled curated layer), how they connect, and where the map has holes.
+        </p>
+        <p className="mt-3 text-[13px] text-faint">Independent research. Not affiliated with or endorsed by the RL1 cooperative, SWIAT or any institution shown.</p>
+      </header>
 
-          {/* Bridge map */}
-          <div className="rounded-2xl border border-line bg-surface p-5 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.25)]">
-            <div className="mb-3 grid grid-cols-[1fr_28px_1fr] items-center px-1 text-[11px] font-semibold uppercase tracking-[0.14em]">
-              <span className="text-muted">Traditional</span>
-              <span />
-              <span className="text-token">Tokenized</span>
-            </div>
-            <ul className="space-y-1.5">
-              {bridges.map((b) => (
-                <li key={b.from} className="grid grid-cols-[1fr_28px_1fr] items-center gap-0">
-                  <Link href={`/learn/${b.fromSlug}`} className="rounded-lg border border-line bg-bg px-3 py-2.5 text-[13.5px] font-medium text-ink transition hover:border-accent/50">
-                    {b.from}
-                  </Link>
-                  <span className="relative mx-auto block h-px w-full bg-line" aria-hidden>
-                    <span className="absolute -top-[3px] right-0 h-[7px] w-[7px] rotate-45 border-r border-t border-token" />
-                  </span>
-                  <Link href={`/learn/${b.toSlug}`} className="rounded-lg border border-token/30 bg-token-soft px-3 py-2.5 text-[13.5px] font-medium text-ink transition hover:border-token">
-                    {b.to}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+      <div className="mt-8 grid gap-3 sm:grid-cols-3 lg:grid-cols-6">
+        {[
+          ["10", `founding members in ${foundingCountries} countries`],
+          ["8", "validator nodes, 6 in Germany"],
+          ["€700m+", "settled in 50+ transactions since 2023"],
+          ["21 Sep 2026", "Pontes live: central bank money via SWIAT"],
+          [universe.length.toLocaleString(), `institutions in ${CATEGORIES.length} categories, ${uCountries} countries`],
+          [String(highFit), `potential members (membership fit high); ${prospects.length} named prospects`],
+        ].map(([v, l]) => (
+          <div key={l} className="rounded-2xl border border-line bg-surface px-5 py-4">
+            <div className="font-serif text-3xl text-ink">{v}</div>
+            <div className="mt-1 text-[13px] leading-snug text-muted">{l}</div>
           </div>
+        ))}
+      </div>
+
+      <nav aria-label="On this page" className="sticky top-16 z-30 -mx-4 mt-8 flex gap-1 overflow-x-auto border-y border-line bg-bg/90 px-4 py-2 backdrop-blur sm:mx-0 sm:rounded-xl sm:border">
+        {SECTIONS.map(([id, label]) => (
+          <a key={id} href={`#${id}`} className="whitespace-nowrap rounded-lg px-3 py-1.5 text-[13px] font-medium text-muted hover:bg-surface hover:text-ink">
+            {label}
+          </a>
+        ))}
+      </nav>
+
+      <Section id="stack" kicker="Mental model · ASAP stack" title="Nine planes, one ledger">
+        <p>
+          The layering follows the Access, Service, Asset and Platform model from MAS&apos;s Project Guardian work on interoperable networks, split one level
+          deeper and set on a governance foundation. RL1 is the platform. Institutions that play several roles appear once per layer (↳), linked by a
+          dashed line. Zoom in to reveal every label, isolate a layer, or run a flow to watch a deal travel through the stack, including the ones that have
+          no route today.
+        </p>
+      </Section>
+      <div className="relative left-1/2 mt-6 w-screen -translate-x-1/2 px-4 sm:px-6">
+        <div className="mx-auto max-w-[1720px]">
+          <EcosystemStack3D />
         </div>
-      </section>
+      </div>
+      <div className="mt-8 grid gap-3 md:grid-cols-3 xl:grid-cols-5">
+        {(["Access", "Service", "Asset", "Platform", "Governance"] as const).map((a) => (
+          <div key={a} className="rounded-2xl border border-line bg-surface p-4">
+            <p className="font-mono text-[11px] uppercase tracking-wider text-accent">{a}</p>
+            {LAYERS.filter((l) => l.asap === a)
+              .reverse()
+              .map((l) => (
+                <div key={l.id} className="mt-2">
+                  <p className="text-[14px] font-semibold text-ink">
+                    {l.label} <span className="font-mono text-[12px] font-normal text-faint">{entities.filter((e) => e.layer === l.id).length}</span>
+                  </p>
+                  <p className="text-[12.5px] leading-snug text-muted">{l.question}</p>
+                </div>
+              ))}
+          </div>
+        ))}
+      </div>
 
-      {/* Stats */}
-      <section className="border-b border-line bg-surface/50">
-        <dl className="mx-auto grid max-w-7xl grid-cols-2 gap-px px-4 sm:px-6 md:grid-cols-5">
-          {[
-            [topics.length, "lessons"],
-            [`${Math.round(totalMinutes / 60)}h`, "of content"],
-            [widgets + 1, "interactive tools"],
-            [products.length, "products drawn"],
-            [players.length, "institutions"],
-          ].map(([v, l]) => (
-            <div key={l as string} className="py-6">
-              <dt className="sr-only">{l}</dt>
-              <dd className="font-serif text-3xl text-ink">{v}</dd>
-              <dd className="text-[13px] text-muted">{l}</dd>
+      <Section id="roster" kicker="Full list" title="Who is in, and in what capacity">
+        <p>
+          Membership, node operation and support are three different things. Only three founders also run validators; four validators are IT firms that
+          are not members. Below them, every relevant institution that is not in RL1.
+        </p>
+        <div className="mt-6 grid gap-4 md:grid-cols-2">
+          {ROSTER.map((r) => (
+            <div key={r.title} className="rounded-2xl border border-line bg-surface p-5">
+              <div className="flex items-baseline justify-between gap-3">
+                <h3 className="text-[15px] font-semibold text-ink">{r.title}</h3>
+                <span className="font-mono text-[13px] text-faint">{r.ids.length}</span>
+              </div>
+              <p className="text-[13px] text-muted">{r.note}</p>
+              <ul className="mt-4 grid gap-2.5 sm:grid-cols-2">
+                {r.ids.map((id) => {
+                  const e = byId[id];
+                  return (
+                    <li key={id} className="flex items-center gap-2.5">
+                      <PlayerLogo name={e.name} domain={e.domain} size={30} />
+                      <span className="min-w-0">
+                        <span className="block truncate text-[13px] font-semibold text-ink">{e.name}</span>
+                        <span className="block truncate text-[12px] text-muted">
+                          {e.type} · {e.country}
+                        </span>
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
           ))}
-        </dl>
-      </section>
-
-      {/* Tracks */}
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
-        <SectionHead kicker="Curriculum" title="Six tracks, one mental model" text="Start with the foundations or jump into any track. Every traditional lesson links to its tokenized counterpart." href="/learn" cta="See the full curriculum" />
-        <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {tracks.map((t, i) => {
-            const list = topicsForTrack(t.id);
-            return (
-              <Link key={t.id} href={`/learn#${t.id}`} className="group flex flex-col rounded-2xl border border-line bg-surface p-6 transition hover:-translate-y-0.5 hover:shadow-lg">
-                <div className="flex items-center justify-between">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-xl text-lg text-bg" style={{ background: t.color }}>
-                    {t.icon}
-                  </span>
-                  <span className="font-mono text-[11px] text-faint">TRACK {i + 1}</span>
-                </div>
-                <h3 className="mt-5 font-serif text-2xl font-medium text-ink">{t.title}</h3>
-                <p className="mt-2 flex-1 text-[14px] leading-relaxed text-muted">{t.description}</p>
-                <p className="mt-4 text-[12.5px] text-faint">
-                  {list.length} lessons · {list.reduce((s, x) => s + x.minutes, 0)} min
-                </p>
-                <div className="mt-3">
-                  <ProgressBar slugs={list.map((x) => x.slug)} color={t.color} />
-                </div>
-              </Link>
-            );
-          })}
         </div>
-      </section>
-
-
-      {/* Mental model */}
-      <section className="border-y border-line bg-surface/50">
-        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
-          <SectionHead kicker="The finance map" title="One mental model for all of it" text="Seven layers and six lifecycle stages. Every product, institution and rule has a place, and you can search any of them to see exactly where it fits." href="/map" cta="Open the map" />
-          <div className="mt-10 grid gap-4 lg:grid-cols-[1.2fr_1fr]">
-            <ol className="overflow-hidden rounded-2xl border border-line bg-surface">
-              {layers.map((l) => (
-                <li key={l.id} className="flex items-baseline gap-3 border-b border-line px-5 py-3 last:border-0" style={{ borderLeft: `4px solid ${l.color}` }}>
-                  <span className="font-mono text-[11.5px] text-faint">L{l.n}</span>
-                  <span className="text-[15px] font-semibold text-ink">{l.label}</span>
-                  <span className="hidden text-[13.5px] text-muted sm:block">{l.question}</span>
-                </li>
-              ))}
-            </ol>
-            <div className="rounded-2xl border border-line bg-surface p-6">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-faint">Five questions to classify anything</p>
-              <ol className="mt-4 space-y-3 text-[14.5px] leading-snug text-ink/85">
-                {[
-                  "What is it? → layer",
-                  "When does it act? → issue, trade, clear, settle, service, finance",
-                  "Which asset class? → cash, money market, bonds, equity, funds, derivatives, FX, digital",
-                  "What risk does it carry or remove?",
-                  "Which rails: traditional or tokenized?",
-                ].map((t, i) => (
-                  <li key={t} className="flex gap-3">
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent-soft font-mono text-[12px] font-semibold text-accent">{i + 1}</span>
-                    {t}
-                  </li>
-                ))}
-              </ol>
-              <Link href="/learn/the-finance-stack" className="mt-5 inline-block text-[14px] font-semibold text-accent hover:underline">
-                Read the lesson →
-              </Link>
-            </div>
+        <div className="mt-4 rounded-2xl border border-line bg-surface p-5">
+          <div className="flex items-baseline justify-between gap-3">
+            <h3 className="text-[15px] font-semibold text-ink">Relevant institutions not in RL1</h3>
+            <span className="font-mono text-[13px] text-faint">{prospects.length}</span>
           </div>
-        </div>
-      </section>
-
-      {/* Products */}
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
-        <SectionHead kicker="Products & services" title="Every instrument, drawn" text="Who the parties are, how cash and assets move at each step, the risk profile, and the tokenized version." href="/products" cta="Browse all products" />
-        <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {["repo", "government-bond", "etf", "stablecoin", "securities-loan", "interest-rate-swap", "csd-settlement", "tokenized-mmf"].map((slug) => {
-            const p = products.find((x) => x.slug === slug)!;
-            return (
-              <Link key={slug} href={`/products/${slug}`} className="group rounded-2xl border border-line bg-surface p-5 transition hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-md">
-                <p className="font-mono text-[11px] text-faint">{p.family}</p>
-                <p className="mt-2 text-[16px] font-semibold text-ink group-hover:text-accent">{p.name}</p>
-                <p className="mt-1.5 text-[13px] leading-snug text-muted">{p.short}</p>
-              </Link>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* Globe */}
-      <section className="border-y border-line bg-surface/50">
-        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
-          <SectionHead kicker="Global institution map" title="Spin the world of finance" text={`${players.filter((p) => p.city).length} institutions across ${Object.keys(cities).length} financial centres, on an interactive globe you can filter and explore.`} href="/globe" cta="Open the globe" />
-        </div>
-      </section>
-
-      {/* Compare preview */}
-      <section className="border-y border-line bg-surface/50">
-        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
-          <SectionHead kicker="Global comparison" title="Eight markets, side by side" text="Settlement cycles, CSDs, CCPs, benchmarks, MMF rules, stablecoin regimes and flagship tokenization projects." href="/compare" cta="Open the comparison" />
-          <div className="mt-10 overflow-x-auto rounded-2xl border border-line bg-surface">
-            <table className="w-full min-w-[760px] text-left text-[13.5px]">
-              <thead>
-                <tr className="border-b border-line bg-surface-2/60">
-                  <th className="px-4 py-3 text-[12px] font-semibold uppercase tracking-wide text-muted">Market</th>
-                  <th className="px-4 py-3 text-[12px] font-semibold uppercase tracking-wide text-muted">Settlement</th>
-                  <th className="px-4 py-3 text-[12px] font-semibold uppercase tracking-wide text-muted">Benchmark</th>
-                  <th className="px-4 py-3 text-[12px] font-semibold uppercase tracking-wide text-token">Stablecoin regime</th>
-                </tr>
-              </thead>
-              <tbody>
-                {jurisdictions.map((j) => (
-                  <tr key={j.id} className="border-b border-line/70 last:border-0">
-                    <td className="whitespace-nowrap px-4 py-3 font-medium text-ink">
-                      <span className="mr-2">{j.flag}</span>
-                      {j.name}
-                    </td>
-                    <td className="px-4 py-3 text-ink/80">{j.rows.settlement}</td>
-                    <td className="px-4 py-3 text-ink/80">{j.rows.rfr}</td>
-                    <td className="px-4 py-3 text-ink/80">{j.rows.stablecoin}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      {/* Players wall */}
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
-        <SectionHead kicker="Major players" title="Who runs the rails" text="Custodians, CSDs, CCPs, dealers, asset managers, tokenization platforms, stablecoin issuers and regulators, with what each is building." href="/players" cta="Browse all players" />
-        <div className="mt-10 grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
-          {wallIds.map((id) => {
-            const p = playerById.get(id)!;
-            return (
-              <Link key={id} href={`/players?focus=${id}`} className="flex flex-col items-center gap-2 rounded-xl border border-line bg-surface p-4 text-center transition hover:border-accent/50">
-                <PlayerLogo name={p.name} domain={p.domain} size={44} />
-                <span className="line-clamp-1 text-[12px] font-medium text-ink">{p.name}</span>
-              </Link>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* Timeline preview */}
-      <section className="border-t border-line bg-surface/50">
-        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
-          <SectionHead kicker="Timeline" title="Tokenization is already happening" text="From the World Bank's bond-i in 2018 to BUIDL, the GENIUS Act and the ECB's Pontes." href="/timeline" cta="See all milestones" />
-          <ol className="mt-10 grid gap-4 md:grid-cols-4">
-            {recent.map((m) => (
-              <li key={m.title} className="rounded-2xl border border-line bg-surface p-5">
-                <p className="font-mono text-[12px] text-token">{m.date}</p>
-                <p className="mt-2 font-medium leading-snug text-ink">{m.title}</p>
-                <p className="mt-2 text-[13px] leading-relaxed text-muted">{m.text}</p>
-              </li>
+          <p className="text-[13px] text-muted">
+            All Qivalis euro-stablecoin banks not already in RL1, plus Pontes participants and other European majors. Countries in bold have no RL1 member
+            at all.
+          </p>
+          <div className="mt-4 grid gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-4">
+            {prospectCountries.map((c) => (
+              <div key={c}>
+                <p className={`text-[12px] uppercase tracking-wide ${memberCountries.has(c) ? "text-faint" : "font-bold text-ink"}`}>{c}</p>
+                <ul className="mt-1.5 space-y-1.5">
+                  {prospects
+                    .filter((e) => e.country === c)
+                    .map((e) => (
+                      <li key={e.id} className="flex items-center gap-2">
+                        <PlayerLogo name={e.name} domain={e.domain} size={22} />
+                        <span className="truncate text-[13px] text-ink">{e.name}</span>
+                      </li>
+                    ))}
+                </ul>
+              </div>
             ))}
-          </ol>
+          </div>
         </div>
-      </section>
-    </>
+      </Section>
+
+      <Section id="positioning" kicker="Infrastructure players" title="Where SWIAT, Dfns, Kaleido and Anchorage sit">
+        <p>
+          Same ecosystem, different distances from the ledger. Proximity runs from 0 (no route today) to 3 (inside the network). None of the three outside
+          vendors has an announced RL1 integration; the gaps they would fill are listed under blind spots.
+        </p>
+        <div className="mt-6 grid gap-4 lg:grid-cols-2">
+          {[...positions].sort((a, b) => b.linkLevel - a.linkLevel).map((p) => {
+            const e = byId[p.id];
+            return (
+              <article key={p.id} className="rounded-2xl border border-line bg-surface p-5">
+                <div className="flex items-center gap-3">
+                  <PlayerLogo name={e.name} domain={e.domain} size={40} />
+                  <div className="min-w-0 flex-1">
+                    <h3 className="font-serif text-2xl leading-tight text-ink">{e.name}</h3>
+                    <p className="text-[13px] text-muted">
+                      {p.layer} · {e.city}, {e.country}
+                    </p>
+                  </div>
+                  <div className="text-right" aria-label={`Proximity to RL1: ${p.linkLevel} of 3`}>
+                    <div className="flex gap-1">
+                      {[1, 2, 3].map((i) => (
+                        <span key={i} className={`h-2.5 w-5 rounded-sm ${i <= p.linkLevel ? "bg-accent" : "bg-surface-2"}`} />
+                      ))}
+                    </div>
+                    <div className="mt-1 font-mono text-[11px] text-faint">proximity {p.linkLevel}/3</div>
+                  </div>
+                </div>
+                <dl className="mt-4 grid gap-2.5 text-[14px]">
+                  {[
+                    ["Sells", p.sells],
+                    ["Proof points", p.proof],
+                    ["Link to RL1 today", p.link],
+                    ["Where it plugs in", p.plugIn],
+                    ["Tension", p.tension],
+                  ].map(([k, v]) => (
+                    <div key={k} className="grid grid-cols-[8.5rem_1fr] gap-3">
+                      <dt className="text-[12px] font-semibold uppercase tracking-wide text-faint">{k}</dt>
+                      <dd className="leading-snug text-ink">{v}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </article>
+            );
+          })}
+        </div>
+      </Section>
+
+      <Section id="coverage" kicker="Categorised and transparent" title="Coverage: how much of the ecosystem RL1 touches">
+        <p>
+          Every institution sits in exactly one of {CATEGORIES.length} categories, each mapped to an ASAP layer and a membership-fit rule. &ldquo;Inside RL1&rdquo;
+          means member, joining, supporter, observer, operator or validator; &ldquo;linked&rdquo; means a sourced or graded relationship in the detailed map.
+          Everything else is the addressable ecosystem RL1 has not reached.
+        </p>
+        <div className="mt-6">
+          <CoverageFindings />
+        </div>
+        <div className="mt-6">
+          <Coverage />
+        </div>
+      </Section>
+
+      <Section id="geography" kicker="3D globe" title="Geographic footprint">
+        <p>
+          A European network with a German core. Switch to the whole universe to see where the {universe.length.toLocaleString()} institutions sit, and how far
+          the ecosystem reaches beyond RL1&apos;s members.
+        </p>
+        <div className="mt-6">
+          <MemberGlobe3D />
+        </div>
+      </Section>
+
+      <Section id="distribution" kicker="By country and type" title="Distribution">
+        <p>Switch scope to compare the whole universe, the potential-member pool, what is already inside RL1, or one part of the ecosystem.</p>
+        <div className="mt-6">
+          <Distribution />
+        </div>
+      </Section>
+
+      <Section id="blind-spots" kicker="What the map leaves out" title="Blind spots">
+        <p>Each is a gap between what RL1 says it is for and who or what is actually in place, with the question to put to RL1 or its members.</p>
+        <div className="mt-6 grid gap-4 md:grid-cols-2">
+          {blindSpots.map((b) => (
+            <article key={b.title} className="rounded-2xl border border-line bg-surface p-5">
+              <div className="flex items-center gap-2">
+                <span
+                  className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide ${b.severity === "high" ? "border-bad text-bad" : b.severity === "medium" ? "border-warn text-warn" : "border-faint text-faint"}`}
+                >
+                  <span aria-hidden>{b.severity === "high" ? "▲" : b.severity === "medium" ? "■" : "●"}</span>
+                  {b.severity}
+                </span>
+                <span className="font-mono text-[11px] uppercase tracking-wider text-faint">{b.lens}</span>
+              </div>
+              <h3 className="mt-2 font-serif text-xl text-ink">{b.title}</h3>
+              <p className="mt-2 text-[14px] leading-relaxed text-muted">{b.text}</p>
+              <p className="mt-3 rounded-xl bg-surface-2 p-3 text-[13px] leading-relaxed text-ink">
+                <span className="font-semibold">Ask: </span>
+                {b.ask}
+              </p>
+            </article>
+          ))}
+        </div>
+      </Section>
+
+      <Section id="database" kicker="Every institution" title="Database">
+        <p>
+          All {universe.length.toLocaleString()} institutions. Filter by category, layer, country, membership fit, source or RL1 link; open a row for its
+          register reference, LEI, sources and (where mapped) its RL1 role and connections; export the filtered view, the full universe or the relationships
+          as CSV.
+        </p>
+        <div className="mt-6">
+          <Rl1Database />
+        </div>
+      </Section>
+
+      <Section id="method" kicker="How this was built" title="Method and sources">
+        <p>
+          Every entity and relationship carries an evidence grade. <strong className="text-ink">Confirmed</strong>: stated by RL1, SWIAT, the ECB or the
+          entity itself. <strong className="text-ink">Reported</strong>: stated by trade press or listed without detail.{" "}
+          <strong className="text-ink">Inferred</strong>: our reading of public facts, such as competitive overlaps or plausible integrations; nothing
+          inferred should be quoted as fact. The technical stack (client, consensus, privacy) is not public and is not guessed here.
+        </p>
+        <p>
+          The universe is rebuilt with <code className="rounded bg-surface-2 px-1.5 py-0.5 text-[13px]">npm run universe</code>, which downloads each register,
+          applies the inclusion rule below, resolves legal names and HQ cities through GLEIF, geocodes with GeoNames and de-duplicates by LEI and normalised
+          name (an institution found in several sources keeps every source). Membership fit is a rule per category and jurisdiction, not a judgement on
+          individual institutions. Curated rows are compiled, not register-verified, and are labelled as such.
+        </p>
+        <div className="mt-6">
+          <SourcesTable />
+        </div>
+        <p className="mt-6">Sources for the detailed RL1 map:</p>
+        <ul className="mt-2 grid gap-1.5 sm:grid-cols-2">
+          {Object.values(SOURCES).map((s) => (
+            <li key={s.url}>
+              <a href={s.url} target="_blank" rel="noreferrer" className="text-[14px] text-accent hover:underline">
+                {s.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </Section>
+    </div>
   );
 }
 
-function SectionHead({ kicker, title, text, href, cta }: { kicker: string; title: string; text: string; href: string; cta: string }) {
+function Section({ id, kicker, title, children }: { id: string; kicker: string; title: string; children: React.ReactNode }) {
   return (
-    <div className="flex flex-wrap items-end justify-between gap-6">
-      <div className="max-w-2xl">
-        <p className="font-mono text-[12px] uppercase tracking-[0.16em] text-accent">{kicker}</p>
-        <h2 className="mt-2 font-serif text-4xl font-medium tracking-tight text-ink">{title}</h2>
-        <p className="mt-3 text-[16px] leading-relaxed text-muted">{text}</p>
-      </div>
-      <Link href={href} className="text-[14px] font-semibold text-accent hover:underline">
-        {cta} →
-      </Link>
-    </div>
+    <section id={id} className="mt-16 scroll-mt-32">
+      <p className="font-mono text-[12px] uppercase tracking-[0.16em] text-accent">{kicker}</p>
+      <h2 className="mt-1 font-serif text-4xl font-medium tracking-tight text-ink">{title}</h2>
+      <div className="mt-3 text-[16px] leading-relaxed text-muted [&>p]:max-w-3xl">{children}</div>
+    </section>
   );
 }

@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for helping keep Ledgerwise accurate. Finance and tokenization change fast.
+Thanks for helping keep the RL1 Ecosystem Hub accurate. Finance and tokenization change fast.
 
 ## Ground rules
 

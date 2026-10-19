@@ -1,0 +1,132 @@
+[
+  {
+    "id": "rl1-core",
+    "label": "Detailed RL1 map",
+    "publisher": "This hub (src/content/rl1.ts)",
+    "url": "https://www.rl1.network/",
+    "fetchedAt": "2026-10-03",
+    "rows": 125,
+    "kept": 125,
+    "rule": "Every entity with a sourced or graded relationship to RL1 (members, validators, operator, supporters, ecosystem, vendors, peers, prospects)."
+  },
+  {
+    "id": "ecb-si",
+    "label": "ECB list of supervised entities: significant institutions",
+    "publisher": "European Central Bank (SSM)",
+    "url": "https://www.bankingsupervision.europa.eu/ecb/pub/pdf/ssm.listofsupervisedentities202608.en.xlsx",
+    "fetchedAt": "2026-10-03T18:53:40.298Z",
+    "rows": 109,
+    "kept": 75,
+    "rule": "Every significant banking group, listed by its head entity (subsidiaries roll up)."
+  },
+  {
+    "id": "ecb-lsi",
+    "label": "ECB list of supervised entities: less significant institutions",
+    "publisher": "European Central Bank (SSM)",
+    "url": "https://www.bankingsupervision.europa.eu/ecb/pub/pdf/ssm.listofsupervisedentities202608.en.xlsx",
+    "fetchedAt": "2026-10-03T18:53:40.298Z",
+    "rows": 2067,
+    "kept": 487,
+    "rule": "Credit institutions only (1958). Excluded 1460 local savings, cooperative, Raiffeisen, rural and municipal banks (name match incl. German \"eG\", Finnish Osuuspankki/Säästöpankki, Spanish Cajas Rurales, Portuguese Crédito Agrícola caixas), which reach RL1 through their central institutions (DekaBank and Landesbanken, DZ BANK, Raiffeisen Landesbanken, ICCREA/Cassa Centrale, Crédit Agricole SA); holding companies and branches also excluded."
+  },
+  {
+    "id": "esma-venues",
+    "label": "ESMA register: regulated markets, MTFs, OTFs, SME growth markets",
+    "publisher": "European Securities and Markets Authority",
+    "url": "https://registers.esma.europa.eu/publication/searchRegister?core=esma_registers_upreg",
+    "fetchedAt": "2026-10-03T18:53:45.560Z",
+    "rows": 346,
+    "kept": 101,
+    "rule": "Active venues, grouped by operator LEI (one institution per operator, its MIC codes kept in the reference)."
+  },
+  {
+    "id": "mica-emt",
+    "label": "ESMA interim MiCA register: e-money token issuers",
+    "publisher": "European Securities and Markets Authority",
+    "url": "https://www.esma.europa.eu/sites/default/files/2024-12/EMTWP.csv",
+    "fetchedAt": "2026-10-03T18:53:46.253Z",
+    "rows": 50,
+    "kept": 18,
+    "rule": "Issuers without an authorisation end date, one row per issuer (several tokens roll up)."
+  },
+  {
+    "id": "mica-casp",
+    "label": "ESMA interim MiCA register: crypto-asset service providers",
+    "publisher": "European Securities and Markets Authority",
+    "url": "https://www.esma.europa.eu/sites/default/files/2024-12/CASPS.csv",
+    "fetchedAt": "2026-10-03T18:53:46.205Z",
+    "rows": 364,
+    "kept": 312,
+    "rule": "Authorised CASPs without an end date, one per LEI; service codes a–j as in MiCA Art. 3(1)(16)."
+  },
+  {
+    "id": "players",
+    "label": "Hub players dataset",
+    "publisher": "This hub (src/content/players*.ts)",
+    "url": "https://github.com/hichemBA67/ledgerwise/blob/main/src/content/players.ts",
+    "fetchedAt": "2026-09-20",
+    "rows": 233,
+    "kept": 190,
+    "rule": "Global market-infrastructure players already documented in the hub, with HQ city."
+  },
+  {
+    "id": "curated",
+    "label": "Curated: global FMIs, banks, exchanges, asset managers, digital-asset infrastructure",
+    "publisher": "This hub (src/content/universe-curated.ts)",
+    "url": "https://github.com/hichemBA67/ledgerwise/blob/main/src/content/universe-curated.ts",
+    "fetchedAt": "2026-10-03",
+    "rows": 482,
+    "kept": 341,
+    "rule": "Institutions no machine-readable public register lists: CSDs and CCPs outside the ESMA registers, banks outside the euro area, non-EU exchanges, large asset managers, tokenisation and custody firms. Compiled, not register-verified."
+  },
+  {
+    "id": "defillama-chains",
+    "label": "DefiLlama: chains by DeFi TVL",
+    "publisher": "DefiLlama",
+    "url": "https://api.llama.fi/v2/chains",
+    "fetchedAt": "2026-10-03T18:53:48.499Z",
+    "rows": 468,
+    "kept": 35,
+    "rule": "Top 40 chains by total value locked."
+  },
+  {
+    "id": "defillama-cex",
+    "label": "DefiLlama: centralised exchanges (proof of reserves)",
+    "publisher": "DefiLlama",
+    "url": "https://api.llama.fi/protocols",
+    "fetchedAt": "2026-10-03T18:53:48.423Z",
+    "rows": 80,
+    "kept": 57,
+    "rule": "Every CEX with at least $1m of tracked on-chain reserves; headquarters not geocoded."
+  },
+  {
+    "id": "defillama-dapps",
+    "label": "DefiLlama: dApp / DeFi protocols",
+    "publisher": "DefiLlama",
+    "url": "https://api.llama.fi/protocols",
+    "fetchedAt": "2026-10-03T18:53:48.423Z",
+    "rows": 8476,
+    "kept": 195,
+    "rule": "Protocols grouped by parent (versions roll up), TVL ≥ $75m; excluded categories: CEX, Chain, Ponzi, Luck Games, Yield Lottery, Gamified Mining, Telegram Bot, Physical TCG, Canonical Bridge."
+  },
+  {
+    "id": "gleif",
+    "label": "GLEIF LEI records (legal name and HQ city)",
+    "publisher": "Global Legal Entity Identifier Foundation",
+    "url": "https://api.gleif.org/api/v1/lei-records",
+    "fetchedAt": "2026-10-03T19:05:33.909Z",
+    "rows": 0,
+    "kept": 0,
+    "rule": "Used to resolve legal names and HQ cities for every record with an LEI; not a source of institutions."
+  },
+  {
+    "id": "geonames",
+    "label": "GeoNames cities15000 + country info",
+    "publisher": "GeoNames (CC BY 4.0)",
+    "url": "https://download.geonames.org/export/dump/",
+    "fetchedAt": "2026-10-03T18:53:39.643Z",
+    "rows": 197602,
+    "kept": 0,
+    "rule": "Geocodes HQ cities; falls back to the national capital (marked) when the city can't be matched."
+  }
+]

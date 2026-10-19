@@ -1,6 +1,10 @@
-# Ledgerwise: from repo to tokenized repo
+# RL1 Ecosystem Hub
 
-An open-source learning platform for the plumbing of finance (money markets, repo, securities lending, money market funds, bonds, custody, clearing and settlement) and how **tokenization** is rebuilding each of them.
+An independent hub mapping the **Regulated Layer One (RL1)** ecosystem (members, validators, vendors, regulators, settlement assets and competing networks) on an Access–Service–Asset–Platform stack, with an interactive 3D model, a globe and an exportable database at `/`. Not affiliated with the RL1 cooperative or SWIAT.
+
+The ecosystem universe (1,900+ institutions) is rebuilt from public data with `npm run universe` (ECB list of supervised entities, ESMA venue and MiCA registers, DefiLlama, GLEIF, GeoNames, plus a labelled curated layer in `src/content/universe-curated.ts`). Raw downloads are cached in `data/raw/` (git-ignored); `--fresh` re-downloads.
+
+It keeps the original learning platform for the plumbing of finance (money markets, repo, securities lending, money market funds, bonds, custody, clearing and settlement) and how **tokenization** is rebuilding each of them.
 
 Built with **Next.js 16 (App Router)**, **React 19**, **TypeScript** and **Tailwind CSS v4**. Every page is statically generated.
 

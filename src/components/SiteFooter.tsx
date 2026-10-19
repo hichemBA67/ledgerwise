@@ -9,13 +9,17 @@ export function SiteFooter() {
         <div>
           <div className="flex items-center gap-2.5">
             <Logo />
-            <span className="font-serif text-lg text-ink">Ledgerwise</span>
+            <span className="font-serif text-lg text-ink">{site.name}</span>
           </div>
           <p className="mt-3 max-w-sm text-[13.5px] leading-relaxed text-muted">{site.description}</p>
+          <p className="mt-3 max-w-sm text-[12px] leading-relaxed text-faint">
+            Independent research. Not affiliated with or endorsed by the RL1 cooperative, SWIAT or any institution shown.
+          </p>
         </div>
         <FooterCol
           title="Learn"
           links={[
+            ["/fundamentals", "Fundamentals"],
             ["/learn", "Curriculum"],
             ["/map", "The finance map"],
             ["/learn/repo", "Repo"],
@@ -26,6 +30,8 @@ export function SiteFooter() {
         <FooterCol
           title="Explore"
           links={[
+            ["/", "RL1 ecosystem"],
+            ["/#database", "Ecosystem database"],
             ["/products", "Products & services"],
             ["/globe", "Global institution map"],
             ["/compare", "Global comparison"],

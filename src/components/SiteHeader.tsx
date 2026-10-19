@@ -8,15 +8,18 @@ import { SearchPalette, type SearchItem } from "./SearchPalette";
 import { ThemeToggle } from "./ThemeToggle";
 
 const NAV = [
-  { href: "/map", label: "Map" },
-  { href: "/learn", label: "Curriculum" },
-  { href: "/products", label: "Products" },
-  { href: "/globe", label: "Globe" },
-  { href: "/compare", label: "Compare" },
+  { href: "/", label: "Ecosystem" },
+  { href: "/#database", label: "Database" },
   { href: "/players", label: "Players" },
+  { href: "/globe", label: "Globe" },
+  { href: "/products", label: "Products" },
+  { href: "/learn", label: "Curriculum" },
 ];
 
 const MORE = [
+  { href: "/fundamentals", label: "Fundamentals" },
+  { href: "/map", label: "Finance map" },
+  { href: "/compare", label: "Compare" },
   { href: "/timeline", label: "Timeline" },
   { href: "/glossary", label: "Glossary" },
 ];
@@ -30,7 +33,9 @@ export function SiteHeader({ searchItems, repo }: { searchItems: SearchItem[]; r
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6">
         <Link href="/" className="flex items-center gap-2.5" onClick={() => setMenu(false)}>
           <Logo />
-          <span className="font-serif text-[20px] font-medium tracking-tight text-ink">Ledgerwise</span>
+          <span className="font-serif text-[20px] font-medium tracking-tight text-ink">
+            RL1 <span className="text-muted">Ecosystem Hub</span>
+          </span>
         </Link>
         <nav className="ml-2 hidden items-center gap-0.5 lg:flex">
           {NAV.map((n) => {
@@ -63,7 +68,7 @@ export function SiteHeader({ searchItems, repo }: { searchItems: SearchItem[]; r
             href={repo}
             target="_blank"
             rel="noreferrer"
-            aria-label="Ledgerwise on GitHub"
+            aria-label="RL1 Ecosystem Hub on GitHub"
             className="flex h-9 w-9 items-center justify-center rounded-lg border border-line text-muted transition hover:bg-surface hover:text-ink"
           >
             <GitHubIcon />
