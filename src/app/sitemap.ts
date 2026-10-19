@@ -4,6 +4,8 @@ import { products } from "@/content/products";
 
 const base = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     ...["", "/ecosystem", "/map", "/learn", "/products", "/globe", "/compare", "/players", "/timeline", "/glossary"].map((p) => ({ url: `${base}${p}` })),

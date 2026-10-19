@@ -49,7 +49,7 @@ export function PlayerLogo({ name, domain, size = 40 }: { name: string; domain: 
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={`/logos/${entry.file}`}
+        src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/logos/${entry.file}`}
         alt={`${name} logo`}
         width={size}
         height={size}
