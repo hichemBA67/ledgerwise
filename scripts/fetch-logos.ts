@@ -9,6 +9,7 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import sharp from "sharp";
 import { players } from "../src/content/players";
+import { entities as rl1Entities } from "../src/content/rl1";
 
 const OUT_DIR = "public/logos";
 const MANIFEST = "src/content/logos.json";
@@ -171,7 +172,9 @@ async function main() {
       existing = {};
     }
   }
-  const queue = players.filter((p) => all || !existing[p.domain]);
+  // Players plus RL1 ecosystem entities, one entry per domain.
+  const targets = [...new Map([...players, ...rl1Entities].map((p) => [p.domain, p])).values()];
+  const queue = targets.filter((p) => all || !existing[p.domain]);
   console.log(`Fetching ${queue.length} logo(s)${all ? " (full refresh)" : ""}…`);
   const manifest: Record<string, { file: string; light?: boolean }> = { ...existing };
   const missing: string[] = [];
@@ -198,7 +201,7 @@ async function main() {
   await writeFile(MANIFEST, JSON.stringify(sorted, null, 2) + "\n");
 
   const lightCount = Object.values(manifest).filter((m) => m.light).length;
-  console.log(`\n✓ ${Object.keys(manifest).length}/${players.length} logos available (${lightCount} need a dark tile)`);
+  console.log(`\n✓ ${Object.keys(manifest).length}/${targets.length} logos available (${lightCount} need a dark tile)`);
   if (missing.length) console.log(`✗ no logo for ${missing.length}:\n  ${missing.join("\n  ")}`);
 }
 

@@ -10,8 +10,9 @@ export function Logo() {
   return (
     <svg width="26" height="26" viewBox="0 0 32 32" aria-hidden>
       <rect x="1" y="1" width="30" height="30" rx="8" fill="var(--ink)" />
-      <path d="M9 9v14h7" stroke="var(--bg)" strokeWidth="2.6" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-      <rect x="18" y="15" width="6" height="6" rx="1.5" transform="rotate(45 21 18)" fill="var(--token)" />
+      <path d="M16 19.5 6.5 15M16 19.5l9.5-4.5" stroke="var(--bg)" strokeWidth="2" fill="none" strokeLinecap="round" opacity="0.55" />
+      <path d="M16 24 6.5 19.5M16 24l9.5-4.5" stroke="var(--bg)" strokeWidth="2" fill="none" strokeLinecap="round" opacity="0.35" />
+      <path d="M16 6.5 25.5 11 16 15.5 6.5 11Z" fill="var(--token)" />
     </svg>
   );
 }

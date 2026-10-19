@@ -8,6 +8,9 @@ import { products } from "../src/content/products";
 import { cities } from "../src/content/cities";
 import { glossary } from "../src/content/glossary";
 import { players } from "../src/content/players";
+import * as rl1 from "../src/content/rl1";
+import { universe, universeSources } from "../src/content/universe";
+import { CATEGORY_BY_ID } from "../src/content/universe-taxonomy";
 import { milestones } from "../src/content/timeline";
 import { tracks } from "../src/content/tracks";
 
@@ -100,8 +103,39 @@ for (const p of players) {
 for (const g of glossary) if (g.topic && !slugs.has(g.topic)) errors.push(`[glossary ${g.term}] unknown topic ${g.topic}`);
 for (const m of milestones) for (const id of m.players ?? []) if (!playerIds.has(id)) errors.push(`[timeline ${m.title}] unknown player ${id}`);
 
+const rl1Ids = new Set<string>();
+for (const e of rl1.entities) {
+  if (rl1Ids.has(e.id)) errors.push(`Duplicate RL1 entity id: ${e.id}`);
+  rl1Ids.add(e.id);
+  for (const s of e.sources) if (!rl1.SOURCES[s]) errors.push(`[rl1 ${e.id}] unknown source ${s}`);
+  if (Math.abs(e.lat) > 90 || Math.abs(e.lng) > 180) errors.push(`[rl1 ${e.id}] bad coordinates`);
+  for (const l of e.alsoIn ?? []) if (l === e.layer) errors.push(`[rl1 ${e.id}] alsoIn repeats its primary layer ${l}`);
+}
+for (const ed of rl1.edges) for (const id of [ed.from, ed.to]) if (!rl1Ids.has(id)) errors.push(`[rl1 edge ${ed.from}→${ed.to}] unknown entity ${id}`);
+for (const fl of rl1.flows)
+  for (const st of fl.steps) {
+    const e = rl1.entities.find((x) => x.id === st.node);
+    if (!e) errors.push(`[rl1 flow ${fl.id}] unknown entity ${st.node}`);
+    else if (st.layer && st.layer !== e.layer && !e.alsoIn?.includes(st.layer)) errors.push(`[rl1 flow ${fl.id}] ${st.node} is not in layer ${st.layer}`);
+  }
+for (const p of rl1.positions) if (!rl1Ids.has(p.id)) errors.push(`[rl1 position] unknown entity ${p.id}`);
+
+const uIds = new Set<string>();
+const layerIds = new Set(rl1.LAYERS.map((l) => l.id));
+const srcIds = new Set(universeSources.map((x) => x.id));
+for (const r of universe) {
+  if (uIds.has(r.id)) errors.push(`Duplicate universe id: ${r.id}`);
+  uIds.add(r.id);
+  if (!CATEGORY_BY_ID[r.cat]) errors.push(`[universe ${r.id}] unknown category ${r.cat}`);
+  if (!layerIds.has(r.layer)) errors.push(`[universe ${r.id}] unknown layer ${r.layer}`);
+  for (const x of r.srcs) if (!srcIds.has(x)) errors.push(`[universe ${r.id}] unknown source ${x}`);
+  if (r.core && !rl1Ids.has(r.core)) errors.push(`[universe ${r.id}] unknown core entity ${r.core}`);
+}
+for (const id of rl1Ids) if (!universe.some((r) => r.core === id)) errors.push(`[universe] RL1 entity ${id} missing from the universe`);
+if (universe.length < 1000) errors.push(`Universe has ${universe.length} institutions, expected at least 1000`);
+
 if (errors.length) {
   console.error(`✗ ${errors.length} content error(s):\n  ` + errors.join("\n  "));
   process.exit(1);
 }
-console.log(`✓ Content OK: ${topics.length} topics, ${products.length} products (${products.reduce((n, p) => n + p.build.steps.length, 0)} build steps), ${players.length} players (${new Set(players.filter((p) => p.city).map((p) => p.city)).size} cities), ${mapNodes.length} map nodes, ${glossary.length} terms, ${milestones.length} milestones`);
+console.log(`✓ Content OK: ${topics.length} topics, ${products.length} products (${products.reduce((n, p) => n + p.build.steps.length, 0)} build steps), ${players.length} players (${new Set(players.filter((p) => p.city).map((p) => p.city)).size} cities), ${mapNodes.length} map nodes, ${glossary.length} terms, ${milestones.length} milestones, ${rl1.entities.length} RL1 entities (${rl1.edges.length} links), ${universe.length} universe institutions`);

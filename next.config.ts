@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  redirects() {
+    return [{ source: "/rl1", destination: "/", permanent: true }];
+  },
 };
 
 export default nextConfig;
