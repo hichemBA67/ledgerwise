@@ -8,8 +8,8 @@ import { SearchPalette, type SearchItem } from "./SearchPalette";
 import { ThemeToggle } from "./ThemeToggle";
 
 const NAV = [
-  { href: "/", label: "Ecosystem" },
-  { href: "/#database", label: "Database" },
+  { href: "/ecosystem", label: "Ecosystem" },
+  { href: "/ecosystem#database", label: "Database" },
   { href: "/players", label: "Players" },
   { href: "/globe", label: "Globe" },
   { href: "/products", label: "Products" },
@@ -17,7 +17,6 @@ const NAV = [
 ];
 
 const MORE = [
-  { href: "/fundamentals", label: "Fundamentals" },
   { href: "/map", label: "Finance map" },
   { href: "/compare", label: "Compare" },
   { href: "/timeline", label: "Timeline" },

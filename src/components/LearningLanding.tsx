@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { PlayerLogo } from "@/components/PlayerLogo";
 import { ContinueLink, ProgressBar } from "@/components/ProgressControls";
@@ -22,12 +21,8 @@ const bridges = [
 
 const wallIds = ["bny", "statestreet", "jpmorgan", "euroclear", "clearstream", "dtcc", "lch", "blackrock", "franklin", "goldman", "hsbc", "ubs", "securitize", "circle", "broadridge", "sdx", "fidelity", "citi", "bnpparibas", "coinbase", "fireblocks", "ecb", "fed", "mas"];
 
-export const metadata: Metadata = {
-  title: "Fundamentals",
-  description: "The finance plumbing behind RL1: money markets, repo, bonds, custody, clearing and settlement, and how tokenization rebuilds each.",
-};
-
-export default function Home() {
+/** The learning-platform landing, rendered on the home page under the RL1 section. */
+export function LearningLanding() {
   const order = topics.map((t) => ({ slug: t.slug, title: t.title }));
   const totalMinutes = topics.reduce((s, t) => s + t.minutes, 0);
   const widgets = new Set(topics.flatMap((t) => t.blocks.filter((b) => b.type === "widget").map((b) => (b.type === "widget" ? b.kind : "")))).size;
@@ -36,18 +31,18 @@ export default function Home() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden border-b border-line">
+      <section id="learn" className="relative scroll-mt-16 overflow-hidden border-y border-line">
         <div className="bg-grid pointer-events-none absolute inset-0" aria-hidden />
         <div className="relative mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 md:py-24 lg:grid-cols-[1.1fr_1fr] lg:items-center">
           <div>
             <p className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 text-[12px] font-medium text-muted">
               <span className="h-1.5 w-1.5 rounded-full bg-token" /> Finance fundamentals × tokenization
             </p>
-            <h1 className="mt-6 font-serif text-[2.6rem] font-medium leading-[1.05] tracking-tight text-ink sm:text-6xl">
+            <h2 className="mt-6 font-serif text-[2.6rem] font-medium leading-[1.05] tracking-tight text-ink sm:text-6xl">
               Learn the plumbing of finance.
               <br />
               <span className="italic text-token">Then see it rebuilt on-chain.</span>
-            </h1>
+            </h2>
             <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-muted">
               Repo, securities lending, money market funds, bonds, custody, clearing and settlement, each explained from first principles and linked to its tokenized counterpart, with real players, global comparisons and hands-on calculators.
             </p>

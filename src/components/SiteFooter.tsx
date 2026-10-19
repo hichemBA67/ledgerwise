@@ -19,7 +19,7 @@ export function SiteFooter() {
         <FooterCol
           title="Learn"
           links={[
-            ["/fundamentals", "Fundamentals"],
+            ["/#learn", "Learning platform"],
             ["/learn", "Curriculum"],
             ["/map", "The finance map"],
             ["/learn/repo", "Repo"],
@@ -30,8 +30,8 @@ export function SiteFooter() {
         <FooterCol
           title="Explore"
           links={[
-            ["/", "RL1 ecosystem"],
-            ["/#database", "Ecosystem database"],
+            ["/ecosystem", "RL1 ecosystem"],
+            ["/ecosystem#database", "Ecosystem database"],
             ["/products", "Products & services"],
             ["/globe", "Global institution map"],
             ["/compare", "Global comparison"],

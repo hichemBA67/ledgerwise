@@ -884,7 +884,7 @@ export function EcosystemStack3D() {
               </div>
             ) : (
               <div>
-                <h3 className="font-serif text-2xl text-ink">Nine planes, one ledger</h3>
+                <h3 className="font-serif text-2xl text-ink">Ten planes, one ledger</h3>
                 <p className="mt-2 text-[14px] leading-relaxed text-muted">Click a node or label for its role and links, pick a layer on the left to isolate it, or run a flow above.</p>
               </div>
             )}
